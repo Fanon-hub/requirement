@@ -13,8 +13,8 @@ Rails version: 6.1.7.6
 Database: PostgreSQL
 
 ## Execution Procedure
-1. Clone repo: `git clone `
-2. `cd app-name`
+1. Clone repo: `git clone git@github.com:Fanon-hub/requirement.git `
+2. `cd Task`
 3. `bundle install`
 4. `yarn install` (if needed)
 5. `rails db:create db:migrate`
