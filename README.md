@@ -15,7 +15,7 @@ Database: PostgreSQL
 1. Clone repo: `git clone https://github.com/Fanon-hub/requirement.git`
 2. `cd Task`
 3. `bundle install`
-4. `yarn install` (if needed)
+4. `yarn install` 
 5. `rails db:create db:migrate`
 6. `rails server`
 
