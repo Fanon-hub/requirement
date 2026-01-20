@@ -22,14 +22,16 @@ Database: PostgreSQL
 
 ## Materials
 
-- **Check sheet**: [Google Sheet link]
-- **Catalog design**: [Google Sheet link]
-- **Table definition**: [Google Sheet link]
+- **Check sheet**: https://docs.google.com/spreadsheets/d/1FfCGI3SuQGecFYDcZWwZp-ZUBfaJygGqJvGZq6Xlv6o/edit?usp=sharing
+- **Catalog design**: https://docs.google.com/spreadsheets/d/1FfCGI3SuQGecFYDcZWwZp-ZUBfaJygGqJvGZq6Xlv6o/edit?usp=sharing
+- **Table definition**: https://docs.google.com/spreadsheets/d/1FfCGI3SuQGecFYDcZWwZp-ZUBfaJygGqJvGZq6Xlv6o/edit?usp=sharing
 
 ### ER Diagram
-![ER Diagram](path/to/erd.png)   <!-- or use absolute URL if hosted -->
+<img width="4456" height="5872" alt="image" src="https://github.com/user-attachments/assets/33eac4a4-2203-425b-99ff-b7dd83b6ccee" />
+
 
 ### Screen Transition Diagram
-![Screen Transition](path/to/transition.png)
+<img width="4896" height="2480" alt="image" src="https://github.com/user-attachments/assets/8cdcd935-cc2c-4cd1-abc7-53cc5a50cb39" />
 
-(Add wireframe screenshot too if possible)
+### Wireframe 
+<img width="9604" height="5956" alt="image" src="https://github.com/user-attachments/assets/01a92396-4ced-4639-b159-be63ef679a23" />
