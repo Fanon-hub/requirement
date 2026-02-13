@@ -26,13 +26,12 @@ Database: PostgreSQL
 - **Table definition**: https://docs.google.com/spreadsheets/d/1FfCGI3SuQGecFYDcZWwZp-ZUBfaJygGqJvGZq6Xlv6o/edit?usp=sharing
 
 ### Entity Table
-https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&highlight=0000ff&edit=_blank&layers=1&nav=1&title=Copy%20of%20assign.drawio.png&dark=auto#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1Z6HbX4_YbPx0YbID8svicsgiPo8qyTpu%26export%3Ddownload
+
 
 ### ER Diagram
-<img src="https://drive.google.com/uc?id=1Z6HbX4_YbPx0YbID8svicsgiPo8qyTpu"/>
 
 ### Screen Transition Diagram
-<img src="https://drive.google.com/uc?id=1Z6HbX4_YbPx0YbID8svicsgiPo8qyTpu"/>
+
 
 ### Wireframes 
-<img src="https://drive.google.com/uc?id=1Z6HbX4_YbPx0YbID8svicsgiPo8qyTpu"/>
+
