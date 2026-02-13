@@ -23,7 +23,7 @@ Database: PostgreSQL
 - **Table definition**: https://docs.google.com/spreadsheets/d/1FfCGI3SuQGecFYDcZWwZp-ZUBfaJygGqJvGZq6Xlv6o/edit?usp=sharing
 
 ## Diagrams
-The diagrams are included from the `Diagrams` folder below. If images don't display on your platform, ensure the `Diagrams` folder is committed and paths are preserved.
+The diagrams are included from the `Diagrams` folder.
 
 ### Entity Table
 ![Entity Table](Diagrams/Copy%20of%20assign-Entity%20Tables.drawio.svg)
@@ -36,4 +36,5 @@ The diagrams are included from the `Diagrams` folder below. If images don't disp
 
 ### Wireframes
 ![Wireframes](Diagrams/Copy%20of%20assign-Wireframe.drawio.svg)
+
 
