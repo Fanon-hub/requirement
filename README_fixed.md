@@ -10,7 +10,7 @@ Database: PostgreSQL
 
 ## Execution Procedure
 1. Clone repo: `git clone https://github.com/Fanon-hub/requirement.git`
-2. `cd requirement`
+2. `cd Task`
 3. `bundle install`
 4. `yarn install`
 5. `rails db:create db:migrate`
@@ -37,3 +37,6 @@ The diagrams are included from the `Diagrams` folder below. If images don't disp
 ### Wireframes
 ![Wireframes](Diagrams/Copy%20of%20assign-Wireframe.drawio.svg)
 
+---
+
+If you'd like, I can also rename the diagram files to remove spaces and simplify paths.
