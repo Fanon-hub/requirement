@@ -26,13 +26,10 @@ Database: PostgreSQL
 - **Table definition**: https://docs.google.com/spreadsheets/d/1FfCGI3SuQGecFYDcZWwZp-ZUBfaJygGqJvGZq6Xlv6o/edit?usp=sharing
 
 ### Entity Table
-![Entity Table] (Copy of assign-Entity Tables.drawio.svg)
+! [Entity Table] (Copy of assign-Entity Tables.drawio.svg)
 ### ER Diagram
-![Entity Table] (Copy of assign-ER Diagram.drawio.svg)
+! [Entity Table] (Copy of assign-ER Diagram.drawio.svg)
 ### Screen Transition Diagram
-![Entity Table] (Copy of assign-Screen Transition Diagram.drawio.svg)
+! [Entity Table] (Copy of assign-Screen Transition Diagram.drawio.svg)
 ### Wireframes
-![Entity Table] (Copy of assign-Wireframe.drawio.svg)
-
-### Wireframes 
-
+! [Entity Table] (Copy of assign-Wireframe.drawio.svg) 
