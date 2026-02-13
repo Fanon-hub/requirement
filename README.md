@@ -25,9 +25,17 @@ Database: PostgreSQL
 - **Catalog design**: https://docs.google.com/spreadsheets/d/1FfCGI3SuQGecFYDcZWwZp-ZUBfaJygGqJvGZq6Xlv6o/edit?usp=sharing
 - **Table definition**: https://docs.google.com/spreadsheets/d/1FfCGI3SuQGecFYDcZWwZp-ZUBfaJygGqJvGZq6Xlv6o/edit?usp=sharing
 
-### ER Diagram
-<img width="4896" height="2480" alt="image" src="https://github.com/user-attachments/assets/72b1df69-dc58-474e-924e-364828af6e0e" />
+### Entity Diagram
+<iframe frameborder="0" style="width:100%;height:2096px;" src="https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&highlight=0000ff&edit=_blank&layers=1&nav=1&title=Copy%20of%20assign.drawio.png&dark=auto#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1Z6HbX4_YbPx0YbID8svicsgiPo8qyTpu%26export%3Ddownload"></iframe>
 
+### ER Diagram
+<iframe frameborder="0" style="width:100%;height:913px;" src="https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&highlight=0000ff&edit=_blank&layers=1&nav=1&title=Copy%20of%20assign.drawio.png&page-id=XhFkjmTuLO20bzEJ6Co-&dark=auto#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1Z6HbX4_YbPx0YbID8svicsgiPo8qyTpu%26export%3Ddownload"></iframe>
+
+### Screen Transition Diagram
+<iframe frameborder="0" style="width:100%;height:974px;" src="https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&highlight=0000ff&edit=_blank&layers=1&nav=1&title=Copy%20of%20assign.drawio.png&page-id=R1Sfv1tvzhST26gV_O2Z&dark=auto#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1Z6HbX4_YbPx0YbID8svicsgiPo8qyTpu%26export%3Ddownload"></iframe>
+
+### Wireframes 
+<iframe frameborder="0" style="width:100%;height:5322px;" src="https://viewer.diagrams.net/?tags=%7B%7D&lightbox=1&highlight=0000ff&edit=_blank&layers=1&nav=1&title=Copy%20of%20assign.drawio.png&page-id=cHI-BPUdOtTEFGlMQl4_&dark=auto#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1Z6HbX4_YbPx0YbID8svicsgiPo8qyTpu%26export%3Ddownload"></iframe> 
 
 
 ### Screen Transition Diagram
