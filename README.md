@@ -26,19 +26,15 @@ Database: PostgreSQL
 The diagrams are included from the `Diagrams` folder.
 
 ### Entity Table
-![Entity Table](Diagrams/<img width="1000" height="2094" alt="Copy of assign-Entity Tables drawio" src="https://github.com/user-attachments/assets/5c4c785a-ee9e-4f79-b955-f3de956a7ea5" />
-)
+![Entity Table](Diagrams/entity-table.png)
 
 ### ER Diagram
-![ER Diagram](Diagrams/<img width="1350" height="911" alt="Copy of assign-ER Diagram drawio" src="https://github.com/user-attachments/assets/148fb58e-8e65-4dce-a14e-95d28995370b" />
-)
+![ER Diagram](Diagrams/er-diagram.png)
 
 ### Screen Transition Diagram
-![Screen Transition Diagram](Diagrams/<img width="1703" height="973" alt="Copy of assign-Screen Transition Diagram drawio" src="https://github.com/user-attachments/assets/bbb93ba8-5b2e-42d9-a583-5d1c00f881e7" />
-)
+![Screen Transition Diagram](Diagrams/screen-transition.png)
 
 ### Wireframes
-![Wireframes](Diagrams/<img width="6560" height="5320" alt="Copy of assign-Wireframe drawio" src="https://github.com/user-attachments/assets/2ba00465-6eb8-4802-8ed5-fad1084d4e61" />
-)
+![Wireframes](Diagrams/wireframes.png)
 
 
