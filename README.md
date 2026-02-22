@@ -4,6 +4,8 @@ Taskflow is a team task management application developed to solve the problem of
 In conventional task management, information is scattered across emails, chat tools and spreadsheets, making it difficult to grasp the overall progress and share information.
 This application allows all team members to centrally manage tasks, track progress in real-time, and share information efficiently.
 
+In a nutshell, it is a collaborative task management application built with Ruby on Rails. It solves the problem of scattered information across emails, chats, and spreadsheets by providing a centralized workspace for teams to manage tasks, track progress, and collaborate efficiently.
+
 Ruby version: 3.x
 Rails version: 6.1.7.6
 Database: PostgreSQL
