@@ -26,15 +26,13 @@ Database: PostgreSQL
 The diagrams are included from the `Diagrams` folder.
 
 ### Entity Table
-![Entity Table](Diagrams/entity-table.png)
+![Entity Table](Diagrams/Copy%20of%20assign-Entity%20Tables.drawio.png)
 
 ### ER Diagram
-![ER Diagram](Diagrams/er-diagram.png)
+![ER Diagram](Diagrams/Copy%20of%20assign-ER%20Diagram.drawio.png)
 
 ### Screen Transition Diagram
-![Screen Transition Diagram](Diagrams/screen-transition.png)
+![Screen Transition Diagram](Diagrams/Copy%20of%20assign-Screen%20Transition%20Diagram.drawio.png)
 
 ### Wireframes
-![Wireframes](Diagrams/wireframes.png)
-
-
+![Wireframes](Diagrams/Copy%20of%20assign-Wireframe.drawio.png)
