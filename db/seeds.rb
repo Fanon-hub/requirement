@@ -98,7 +98,7 @@ projects.each_with_index do |project, i|
   assigned_users = [users[i % 5], users[(i + 1) % 5], users[(i + 2) % 5]]
   assigned_users.each do |user|
     ProjectMember.find_or_create_by!(project: project, user: user) do |pm|
-      pm.role      = [:viewer, :contributor, :contributor].sample
+      pm.role      = [:viewer, :editor, :manager, :admin].sample
       pm.joined_at = Date.today - rand(1..30).days
     end
   end
@@ -170,4 +170,5 @@ puts "🔑 Login credentials:"
 puts "   Admin:       admin@taskflow.com / password123"
 puts "   User:        alice@taskflow.com / password123"
 puts "   Guest:       Click 'Try as Guest' on the login page"
-puts "   Admin Guest: Click 'Admin Demo' on the login page"AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+puts "   Admin Guest: Click 'Admin Demo' on the login page"
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
