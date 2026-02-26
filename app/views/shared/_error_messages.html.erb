@@ -1,0 +1,10 @@
+<% if object.errors.any? %>
+  <div class="error-messages">
+    <h4>⚠️ <%= t('errors.fix_errors', count: object.errors.count, default: "Please fix the following %{count} error(s):") %></h4>
+    <ul>
+      <% object.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

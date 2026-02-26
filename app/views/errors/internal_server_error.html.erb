@@ -1,0 +1,10 @@
+<% content_for :title, t('errors.server_error_title') %>
+
+<div style="min-height:70vh; display:flex; align-items:center; justify-content:center; padding:2rem;">
+  <div style="text-align:center; max-width:480px;">
+    <div style="font-size:6rem; font-family:var(--font-mono); font-weight:700; color:var(--slate-200); line-height:1;">500</div>
+    <h1 style="font-size:1.5rem; margin-bottom:0.75rem; margin-top:-1rem;"><%= t('errors.server_error_title') %></h1>
+    <p style="color:var(--slate-500); margin-bottom:2rem;"><%= t('errors.internal_server_error') %></p>
+    <%= link_to t('errors.back_home'), root_path, class: 'btn btn-primary btn-lg' %>
+  </div>
+</div>

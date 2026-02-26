@@ -1,0 +1,66 @@
+# README
+
+This README would normally document whatever steps are necessary to get the
+application up and running.
+
+Things you may want to cover:
+
+* Ruby version
+
+* System dependencies
+
+* Configuration
+
+* Database creation
+
+* Database initialization
+
+* How to run the test suite
+
+* Services (job queues, cache servers, search engines, etc.)
+
+* Deployment instructions
+
+* ...
+
+
+TaskFlow
+# Overview
+Taskflow is a team task management application developed to solve the problem of task progress management and information sharing among team members.
+In conventional task management, information is scattered across emails, chat tools and spreadsheets, making it difficult to grasp the overall progress and share information.
+This application allows all team members to centrally manage tasks, track progress in real-time, and share information efficiently.
+
+In a nutshell, it is a collaborative task management application built with Ruby on Rails. It solves the problem of scattered information across emails, chats, and spreadsheets by providing a centralized workspace for teams to manage tasks, track progress, and collaborate efficiently.
+
+Ruby version: 3.x
+Rails version: 6.1.7.6
+Database: PostgreSQL
+
+## Execution Procedure
+1. Clone repo: `git clone https://github.com/Fanon-hub/requirement.git`
+2. `cd requirement`
+3. `bundle install`
+4. `yarn install`
+5. `rails db:create db:migrate`
+6. `rails server`
+
+## Materials
+
+- **Check sheet**: https://docs.google.com/spreadsheets/d/1FfCGI3SuQGecFYDcZWwZp-ZUBfaJygGqJvGZq6Xlv6o/edit?usp=sharing
+- **Catalog design**: https://docs.google.com/spreadsheets/d/1FfCGI3SuQGecFYDcZWwZp-ZUBfaJygGqJvGZq6Xlv6o/edit?usp=sharing
+- **Table definition**: https://docs.google.com/spreadsheets/d/1FfCGI3SuQGecFYDcZWwZp-ZUBfaJygGqJvGZq6Xlv6o/edit?usp=sharing
+
+## Diagrams
+The diagrams are included from the `Diagrams` folder.
+
+### Entity Table
+![Entity Table](Diagrams/Copy%20of%20assign-Entity%20Tables.drawio.png)
+
+### ER Diagram
+![ER Diagram](Diagrams/Copy%20of%20assign-ER%20Diagram.drawio.png)
+
+### Screen Transition Diagram
+![Screen Transition Diagram](Diagrams/Copy%20of%20assign-Screen%20Transition%20Diagram.drawio.png)
+
+### Wireframes
+![Wireframes](Diagrams/Copy%20of%20assign-Wireframe.drawio.png)

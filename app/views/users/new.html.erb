@@ -1,0 +1,47 @@
+<% content_for :title, t('users.new.title') %>
+
+<div class="page-content">
+  <div class="container-xs">
+    <div style="text-align:center; margin-bottom:2rem;">
+      <div style="font-size:2rem; margin-bottom:0.5rem;">⚡</div>
+      <h1 style="font-size:1.625rem;"><%= t('users.new.title') %></h1>
+      <p class="text-muted"><%= t('users.new.subtitle') %></p>
+    </div>
+
+    <div class="form-card">
+      <%= render 'shared/error_messages', object: @user %>
+
+      <%= form_with model: @user, url: signup_path, local: true do |f| %>
+        <div class="form-group">
+          <%= f.label :name, t('users.fields.name'), class: 'form-label' %>
+          <%= f.text_field :name, class: "form-control #{@user.errors[:name].any? ? 'is-invalid' : ''}", placeholder: t('users.fields.name_placeholder'), required: true, autofocus: true %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :email, t('users.fields.email'), class: 'form-label' %>
+          <%= f.email_field :email, class: "form-control #{@user.errors[:email].any? ? 'is-invalid' : ''}", placeholder: t('users.fields.email_placeholder'), required: true %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :password, t('users.fields.password'), class: 'form-label' %>
+          <%= f.password_field :password, class: "form-control #{@user.errors[:password].any? ? 'is-invalid' : ''}", placeholder: t('users.fields.password_placeholder'), required: true, minlength: 6 %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :password_confirmation, t('users.fields.password_confirmation'), class: 'form-label' %>
+          <%= f.password_field :password_confirmation, class: 'form-control', placeholder: t('users.fields.password_placeholder'), required: true %>
+        </div>
+
+        <div style="margin-top:1.5rem;">
+          <%= f.submit t('users.new.submit'), class: 'btn btn-primary w-100 btn-lg' %>
+        </div>
+      <% end %>
+
+      <div style="text-align:center; margin-top:1.25rem; padding-top:1.25rem; border-top:1px solid var(--slate-200);">
+        <p class="text-sm text-muted"><%= t('users.new.have_account') %>
+          <%= link_to t('navigation.login'), login_path, style: 'font-weight:600;' %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

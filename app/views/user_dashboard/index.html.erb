@@ -1,0 +1,165 @@
+<% content_for :title, t('dashboard.index.title') %>
+
+<div class="page-header">
+  <div class="container">
+    <div>
+      <h1 class="page-title"><%= t('dashboard.index.welcome', name: current_user.display_name) %></h1>
+      <p class="page-subtitle"><%= t('dashboard.index.subtitle') %></p>
+    </div>
+    <div class="page-actions">
+      <%= link_to t('navigation.new_project'), new_project_path, class: 'btn btn-amber' %>
+    </div>
+  </div>
+</div>
+
+<div class="page-content">
+  <div class="container">
+
+    <!-- Stat Cards -->
+    <div class="grid-4 mb-6">
+      <div class="stat-card">
+        <div class="stat-icon stat-icon-amber">📋</div>
+        <div>
+          <div class="stat-label"><%= t('dashboard.index.pending_tasks') %></div>
+          <div class="stat-value"><%= @pending_count %></div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon stat-icon-blue">🔄</div>
+        <div>
+          <div class="stat-label"><%= t('dashboard.index.in_progress_tasks') %></div>
+          <div class="stat-value"><%= @in_progress_count %></div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon stat-icon-green">✅</div>
+        <div>
+          <div class="stat-label"><%= t('dashboard.index.done_tasks') %></div>
+          <div class="stat-value"><%= @done_count %></div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon stat-icon-red">⚠️</div>
+        <div>
+          <div class="stat-label"><%= t('dashboard.index.completion_rate') %></div>
+          <div class="stat-value"><%= @completed_rate %>%</div>
+        </div>
+      </div>
+    </div>
+
+    <% if @total_tasks > 0 %>
+      <div class="card mb-6">
+        <div class="card-body">
+          <div class="progress-wrap">
+            <div class="progress-label">
+              <span><%= t('dashboard.index.completion_rate') %></span>
+              <span><%= @done_count %> / <%= @total_tasks %> tasks</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:<%= @completed_rate %>%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
+
+      <!-- My Tasks -->
+      <div>
+        <div class="flex items-center justify-between mb-4">
+          <h2 style="font-size:1.125rem;"><%= t('dashboard.index.my_tasks') %></h2>
+        </div>
+
+        <% if @pending_tasks.empty? && @in_progress_tasks.empty? %>
+          <div class="card">
+            <div class="empty-state">
+              <div class="empty-state-icon">🎉</div>
+              <h3>All caught up!</h3>
+              <p><%= t('dashboard.index.no_tasks') %></p>
+            </div>
+          </div>
+        <% else %>
+          <% (@in_progress_tasks + @pending_tasks).first(8).each do |task| %>
+            <div class="task-card mb-3 <%= 'overdue' if task.overdue? %> <%= 'high-priority' if task.high? %>">
+              <div class="flex items-center justify-between">
+                <%= link_to task.title, project_task_path(task.project, task), class: 'task-title-link' %>
+                <span class="badge badge-<%= task.status %>"><%= t("tasks.statuses.#{task.status}") %></span>
+              </div>
+              <div class="task-meta">
+                <span class="badge badge-<%= task.priority %>"><%= t("tasks.priorities.#{task.priority}") %></span>
+                <% if task.due_date %>
+                  <span class="task-due <%= 'overdue' if task.overdue? %>">
+                    📅 <%= task.due_date.strftime('%b %d, %Y') %>
+                    <% if task.overdue? %>(Overdue)<% end %>
+                  </span>
+                <% end %>
+                <span class="text-xs text-muted"><%= task.project.name %></span>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+
+        <% if @overdue_tasks.any? %>
+          <div style="margin-top:1.5rem;">
+            <h3 style="font-size:0.95rem; color:var(--red); margin-bottom:0.75rem;">⚠️ <%= t('dashboard.index.overdue_tasks') %></h3>
+            <% @overdue_tasks.each do |task| %>
+              <div class="task-card overdue mb-2">
+                <%= link_to task.title, project_task_path(task.project, task), class: 'task-title-link' %>
+                <div class="task-meta">
+                  <span class="task-due overdue">📅 <%= task.due_date.strftime('%b %d, %Y') %></span>
+                  <span class="text-xs text-muted"><%= task.project.name %></span>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- My Projects -->
+      <div>
+        <div class="flex items-center justify-between mb-4">
+          <h2 style="font-size:1.125rem;"><%= t('dashboard.index.my_projects') %></h2>
+          <%= link_to t('navigation.projects'), projects_path, class: 'btn btn-ghost btn-sm' %>
+        </div>
+
+        <% if @my_projects.empty? %>
+          <div class="card">
+            <div class="empty-state">
+              <div class="empty-state-icon">📁</div>
+              <p><%= t('dashboard.index.no_projects') %></p>
+              <%= link_to t('navigation.new_project'), new_project_path, class: 'btn btn-amber btn-sm' %>
+            </div>
+          </div>
+        <% else %>
+          <% @my_projects.each do |project| %>
+            <div class="project-card mb-3">
+              <div class="project-card-header">
+                <div class="flex items-center justify-between">
+                  <%= link_to project.name, project_path(project), class: 'project-name' %>
+                  <span class="badge badge-<%= project.status %>"><%= t("projects.statuses.#{project.status}") %></span>
+                </div>
+              </div>
+              <div class="project-card-body">
+                <div class="progress-wrap">
+                  <div class="progress-label">
+                    <span>Progress</span>
+                    <span><%= project.task_completion_rate %>%</span>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width:<%= project.task_completion_rate %>%"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="project-card-footer">
+                <span class="text-xs text-muted"><%= project.tasks.count %> tasks</span>
+                <%= link_to 'View Tasks', project_path(project), class: 'btn btn-ghost btn-sm' %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+</div>

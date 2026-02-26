@@ -1,0 +1,78 @@
+<div style="max-width: 600px; margin: 40px auto; padding: 30px; background-color: #fff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+
+  <h1 style="text-align: center; color: #1a1a1a; margin-bottom: 32px; font-size: 2.1rem;">
+    <%= @task.title %>
+  </h1>
+
+  <% if @task.errors.any? %>
+    <div style="background-color: #fff3f3; padding: 16px; border-radius: 8px; margin-bottom: 24px; border: 1px solid #ffcdd2;">
+      <strong style="color: #c62828;">Please correct the following:</strong>
+      <ul style="margin: 12px 0 0 20px; color: #c62828; list-style-type: disc;">
+        <% @task.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div style="display: grid; gap: 24px; font-size: 1.05rem; color: #333;">
+
+    <!-- Description -->
+    <div>
+      <strong style="display: block; color: #555; margin-bottom: 8px; font-size: 1.1rem;">Description</strong>
+      <div style="background-color: #f8f9fa; padding: 16px; border-radius: 8px; white-space: pre-wrap; line-height: 1.6;">
+        <%= simple_format(@task.description.presence || "No description provided.") %>
+      </div>
+    </div>
+
+    <!-- Status & Priority -->
+    <div style="display: flex; flex-wrap: wrap; gap: 24px;">
+      <div style="flex: 1; min-width: 200px;">
+        <strong style="display: block; color: #555; margin-bottom: 8px; font-size: 1.1rem;">Status</strong>
+        <span style="display: inline-block; padding: 8px 16px; border-radius: 999px; font-weight: 500; background-color: <%= task_status_color(@task.status) %>; color: white;">
+          <%= @task.status.humanize %>
+        </span>
+      </div>
+
+      <div style="flex: 1; min-width: 200px;">
+        <strong style="display: block; color: #555; margin-bottom: 8px; font-size: 1.1rem;">Priority</strong>
+        <span style="display: inline-block; padding: 8px 16px; border-radius: 999px; font-weight: 500; background-color: <%= task_priority_color(@task.priority) %>; color: white;">
+          <%= @task.priority.humanize %>
+        </span>
+      </div>
+    </div>
+
+    <!-- Due Date, Creator, Assignee -->
+    <div style="display: grid; gap: 16px;">
+      <% if @task.due_date %>
+        <div>
+          <strong style="color: #555;">Due Date:</strong>
+          <%= @task.due_date.strftime("%B %d, %Y") %>
+        </div>
+      <% end %>
+
+      <div>
+        <strong style="color: #555;">Creator:</strong>
+        <%= @task.creator&.display_name || @task.creator&.email || "Unknown" %>
+      </div>
+
+      <div>
+        <strong style="color: #555;">Assignee:</strong>
+        <%= @task.assignee&.display_name || @task.assignee&.email || "Unassigned" %>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Action Buttons -->
+  <div style="display: flex; justify-content: center; gap: 20px; margin-top: 40px;">
+    <% if policy(@task).update? %>
+      <%= link_to "Edit Task", edit_project_task_path(@project, @task),
+                  style: "padding: 12px 32px; background-color: #2196F3; color: white; border-radius: 8px; text-decoration: none; font-weight: 500; box-shadow: 0 2px 8px rgba(33,150,243,0.3);" %>
+    <% end %>
+
+    <%= link_to "Back to Tasks", project_tasks_path(@project),
+                style: "padding: 12px 32px; background-color: white; color: #555; border: 1px solid #ccc; border-radius: 8px; text-decoration: none; font-weight: 500;" %>
+  </div>
+
+</div>

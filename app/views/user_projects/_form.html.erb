@@ -1,0 +1,33 @@
+<%= render 'shared/error_messages', object: @project %>
+
+<div class="form-group">
+  <%= f.label :name, t('projects.fields.name'), class: 'form-label' %>
+  <%= f.text_field :name, class: "form-control #{@project.errors[:name].any? ? 'is-invalid' : ''}", placeholder: t('projects.fields.name_placeholder') %>
+</div>
+
+<div class="form-group">
+  <%= f.label :description, t('projects.fields.description'), class: 'form-label' %>
+  <%= f.text_area :description, class: 'form-control', placeholder: t('projects.fields.description_placeholder'), rows: 4 %>
+</div>
+
+<div class="grid-2">
+  <div class="form-group">
+    <%= f.label :status, t('projects.fields.status'), class: 'form-label' %>
+    <%= f.select :status, Project.statuses.keys.map { |s| [t("projects.statuses.#{s}"), s] }, {}, class: 'form-control' %>
+  </div>
+  <div></div>
+</div>
+
+<div class="grid-2">
+  <div class="form-group">
+    <%= f.label :start_date, t('projects.fields.start_date'), class: 'form-label' %>
+    <%= f.date_field :start_date, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :end_date, t('projects.fields.end_date'), class: 'form-label' %>
+    <%= f.date_field :end_date, class: "form-control #{@project.errors[:end_date].any? ? 'is-invalid' : ''}" %>
+    <% if @project.errors[:end_date].any? %>
+      <span style="color:var(--red); font-size:0.8rem;"><%= @project.errors[:end_date].first %></span>
+    <% end %>
+  </div>
+</div>

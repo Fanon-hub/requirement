@@ -1,0 +1,70 @@
+<% content_for :title, t('projects.members.title') %>
+
+<div class="page-header">
+  <div class="container">
+    <div>
+      <div class="text-sm text-muted mb-1"><%= link_to @project.name, project_path(@project) %> /</div>
+      <h1 class="page-title"><%= t('projects.members.title') %> — <%= @project.name %></h1>
+    </div>
+    <div class="page-actions">
+      <%= link_to t('actions.back'), project_path(@project), class: 'btn btn-outline' %>
+    </div>
+  </div>
+</div>
+
+<div class="page-content">
+  <div class="container-sm">
+
+    <!-- Add Member -->
+    <div class="card mb-6">
+      <div class="card-header">
+        <h3>Add Team Member</h3>
+      </div>
+      <div class="card-body">
+        <%= form_with model:@project_member, url: add_member_project_path(@project), method: :post, local: true do |f| %>
+          <div class="form-group">
+            <%= f.label :user_id, "Select User" %>
+            <%= f.collection_select :user_id, User.all.order(:name), :id, :display_name,
+                                  { prompt: "Choose a user..." }, 
+                                  { class: 'form-control', required: true } %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :role, "Role" %>
+            <%= f.select :role, ProjectMember.roles.keys.map { |k| [k.to_s.titleize, k] }, 
+                        { prompt: "Select role" }, class: 'form-control', required: true %>
+          </div>
+
+          <%= f.submit "Add Member", class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Members List -->
+    <div class="card">
+      <div class="card-header">
+        <h3>Current Members (<%= @members.count %>)</h3>
+      </div>
+      <% @members.each do |membership| %>
+        <div class="member-item">
+          <div class="user-avatar"><%= membership.user.initials %></div>
+          <div class="member-info">
+            <div class="member-name"><%= membership.user.display_name %></div>
+            <div class="member-email"><%= membership.user.email %></div>
+          </div>
+          <span class="badge badge-active"><%= t("project_members.roles.#{membership.role}") %></span>
+          
+          <% if membership.user != @project.project_manager %>
+            <%= button_to t('actions.remove'),
+                          remove_member_project_path(@project, user_id: membership.user.id),
+                          method: :delete,
+                          data: { confirm: "Are you sure you want to remove #{membership.user.display_name}?" },
+                          class: 'btn btn-sm btn-outline-danger ms-2',
+                          form: { style: "display: inline;" } %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+</div>

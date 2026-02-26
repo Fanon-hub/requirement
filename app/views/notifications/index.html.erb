@@ -1,0 +1,42 @@
+<% content_for :title, t('notifications.index.title') %>
+
+<div class="page-header">
+  <div class="container">
+    <div>
+      <h1 class="page-title"><%= t('notifications.index.title') %></h1>
+    </div>
+    <div class="page-actions">
+      <% if @notifications.any? { |n| !n.is_read? } %>
+        <%= button_to t('notifications.mark_all_read'), mark_all_read_notifications_path, method: :patch, class: 'btn btn-outline btn-sm' %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="page-content">
+  <div class="container-sm">
+    <% if @notifications.empty? %>
+      <div class="card">
+        <div class="empty-state">
+          <div class="empty-state-icon">🔔</div>
+          <h3><%= t('notifications.index.empty') %></h3>
+        </div>
+      </div>
+    <% else %>
+      <div class="card">
+        <% @notifications.each do |n| %>
+          <div style="display:flex; align-items:flex-start; gap:1rem; padding:1rem 1.375rem; border-bottom:1px solid var(--slate-100); background:<%= n.is_read ? 'white' : 'var(--blue-light)' %>; opacity:<%= n.is_read ? '0.7' : '1' %>;">
+            <div style="font-size:1.25rem; flex-shrink:0; margin-top:0.1rem;">🔔</div>
+            <div style="flex:1;">
+              <p style="font-size:0.9rem; color:var(--slate-800); margin-bottom:0.25rem;"><%= n.message %></p>
+              <p style="font-size:0.75rem; color:var(--slate-400); font-family:var(--font-mono);"><%= n.created_at.strftime('%b %d, %Y %H:%M') %></p>
+            </div>
+            <% unless n.is_read %>
+              <%= button_to t('notifications.mark_read'), mark_read_notification_path(n), method: :patch, class: 'btn btn-ghost btn-sm' %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

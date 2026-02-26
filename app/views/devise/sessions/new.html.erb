@@ -1,0 +1,56 @@
+<% content_for :title, t('sessions.new.title') %>
+
+<div class="page-content">
+  <div class="container-xs">
+    <div style="text-align:center; margin-bottom:2rem;">
+      <div style="font-size:2rem; margin-bottom:0.5rem;">⚡</div>
+      <h1 style="font-size:1.625rem;"><%= t('sessions.new.title') %></h1>
+      <p class="text-muted"><%= t('sessions.new.subtitle') %></p>
+    </div>
+
+    <div class="form-card">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name), local: true) do |f| %>
+        <div class="form-group">
+          <%= f.label :email, t('users.fields.email'), class: 'form-label' %>
+          <%= f.email_field :email, class: 'form-control', placeholder: t('users.fields.email_placeholder'), required: true, autofocus: true, autocomplete: "email" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :password, t('users.fields.password'), class: 'form-label' %>
+          <%= f.password_field :password, class: 'form-control', placeholder: t('users.fields.password_placeholder'), required: true, autocomplete: "current-password" %>
+        </div>
+        
+        <div class="form-group">
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me, t('sessions.new.remember_me'), class: 'form-check-label' %>
+        </div>
+        
+
+        <div style="margin-top:1.5rem;">
+          <%= f.submit t('sessions.new.login_button'), class: 'btn btn-primary w-100 btn-lg' %>
+        </div>
+      <% end %>
+
+      <div style="text-align:center; margin-top:1.25rem; padding-top:1.25rem; border-top:1px solid var(--slate-200);">
+        <p class="text-sm text-muted"><%= t('sessions.new.no_account') %>
+          <%= link_to t('navigation.signup'), new_user_registration_path, style: 'font-weight:600;' %>
+        </p>
+      </div>
+
+      <div style="text-align:center; margin-top:1rem;">
+        <p class="text-xs text-muted" style="margin-bottom:0.75rem;"><%= t('sessions.new.or') %></p>
+        <div class="mt-6 flex flex-wrap justify-center gap-4">
+          <div style="display:flex; gap:0.625rem; justify-content:center; flex-wrap:wrap;">
+            <%= button_to t('navigation.guest_login'), users_guest_login_path,
+                          method: :post,
+                          class: 'btn btn-outline btn-sm' %>
+
+            <%= button_to t('navigation.admin_guest_login'), users_admin_guest_login_path,
+                          method: :post,
+                          class: 'btn btn-outline btn-sm' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

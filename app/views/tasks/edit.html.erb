@@ -1,0 +1,31 @@
+<% content_for :title, t('tasks.edit.title') %>
+
+<div class="page-header">
+  <div class="container">
+    <div>
+      <div class="text-sm text-muted mb-1">
+        <%= link_to @task.project.name, project_path(@task.project) %> /
+        <%= link_to @task.title, project_task_path(@task.project, @task) %> /
+      </div>
+      <h1 class="page-title"><%= t('tasks.edit.title') %></h1>
+    </div>
+    <div class="page-actions">
+      <%= link_to t('actions.back'), project_tasks_path(@task.project), class: 'btn btn-outline' %>
+    </div>
+  </div>
+</div>
+
+<div class="page-content">
+  <div class="container-sm">
+    <div class="form-card">
+      <%= form_with model: @task, local: true do |f| %>
+        <%= render 'form', f: f %>
+        <hr class="divider">
+        <div class="flex gap-3">
+          <%= f.submit t('helpers.submit.update', model: 'Task'), class: 'btn btn-amber' %>
+          <%= link_to t('actions.cancel'), project_task_path(@task.project, @task), class: 'btn btn-outline' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

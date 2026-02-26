@@ -1,0 +1,80 @@
+<div style="max-width: 900px; margin: 0 auto; padding: 20px 15px;">
+
+  <!-- Page Title -->
+  <h1 style="text-align: center; color: #333; margin-bottom: 35px; font-size: 2.2rem; font-weight: bold;">
+    Tasks for <%= @project.name %>
+  </h1>
+
+  <!-- New Task Button -->
+  <div style="text-align: center; margin-bottom: 35px;">
+    <%= link_to "New Task", new_project_task_path(@project),
+                style: "background-color: #4CAF50; color: white; padding: 12px 30px; border-radius: 6px; text-decoration: none; font-size: 1.1rem; font-weight: 500; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: background-color 0.2s;" %>
+  </div>
+
+  <% if @tasks.any? %>
+    <div style="display: flex; flex-direction: column; gap: 20px;">
+      <% @tasks.each do |task| %>
+        <div style="background: white; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); padding: 20px; border: 1px solid #eee;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 15px;">
+            <!-- Left: Task info -->
+            <div style="flex: 1; min-width: 0;">
+              <h3 style="margin: 0 0 8px 0; font-size: 1.4rem; color: #222;">
+                <%= link_to task.title, project_task_path(@project, task), style: "color: #1a73e8; text-decoration: none;" %>
+              </h3>
+
+              <% if task.description.present? %>
+                <p style="margin: 0 0 12px 0; color: #555; line-height: 1.5;">
+                  <%= simple_format(task.description.truncate(180)) %>
+                </p>
+              <% end %>
+
+              <div style="display: flex; flex-wrap: wrap; gap: 16px; font-size: 0.95rem; color: #666;">
+                <div>
+                  <strong>Status:</strong>
+                  <span style="color: <%= task.status == 'done' ? '#2e7d32' : task.status == 'in_progress' ? '#1976d2' : '#f57c00' %>; font-weight: 600;">
+                    <%= task.status.to_s.humanize %>
+                  </span>
+                </div>
+
+                <div>
+                  <strong>Priority:</strong>
+                  <span style="color: <%= task.priority == 'high' ? '#d32f2f' : task.priority == 'medium' ? '#f57c00' : '#388e3c' %>; font-weight: 600;">
+                    <%= task.priority.to_s.humanize %>
+                  </span>
+                </div>
+
+                <% if task.due_date %>
+                  <div>
+                    <strong>Due:</strong>
+                    <span style="<%= task.overdue? ? 'color:#c62828; font-weight:600;' : 'color:#555;' %>">
+                      <%= task.due_date.strftime("%b %d, %Y") %>
+                    </span>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+
+            <!-- Right: Actions -->
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+              <%= link_to "Edit", edit_project_task_path(@project, task),
+                          style: "background-color: #ff9800; color: white; padding: 8px 18px; border-radius: 6px; text-decoration: none; font-size: 0.95rem;" %>
+
+              <%= button_to "Delete", project_task_path(@project, task),
+                            method: :delete,
+                            data: { confirm: "Are you sure you want to delete '#{task.title}'?" },
+                            style: "background-color: #f44336; color: white; padding: 8px 18px; border-radius: 6px; font-size: 0.95rem; border: none; cursor: pointer;" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div style="text-align: center; padding: 60px 20px; background: #f9f9f9; border-radius: 10px; border: 1px dashed #ccc;">
+      <p style="font-size: 1.2rem; color: #666; margin-bottom: 20px;">
+        No tasks found for this project.
+      </p>
+      <%= link_to "Create your first task", new_project_task_path(@project),
+                  style: "background-color: #4CAF50; color: white; padding: 12px 30px; border-radius: 6px; text-decoration: none; font-size: 1.1rem;" %>
+    </div>
+  <% end %>
+</div>

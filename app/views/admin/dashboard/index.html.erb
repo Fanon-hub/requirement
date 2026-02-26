@@ -1,0 +1,80 @@
+<% content_for :title, t('admin.dashboard.title') %>
+
+<h1 style="margin-bottom:0.5rem;"><%= t('admin.dashboard.title') %></h1>
+<p class="text-muted" style="margin-bottom:2rem;">System-wide overview and management.</p>
+
+<div class="grid-4 mb-6">
+  <div class="stat-card">
+    <div class="stat-icon stat-icon-blue">👥</div>
+    <div>
+      <div class="stat-label"><%= t('admin.dashboard.users') %></div>
+      <div class="stat-value"><%= @users_count %></div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon stat-icon-amber">📁</div>
+    <div>
+      <div class="stat-label"><%= t('admin.dashboard.projects') %></div>
+      <div class="stat-value"><%= @projects_count %></div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon stat-icon-purple">✅</div>
+    <div>
+      <div class="stat-label"><%= t('admin.dashboard.tasks') %></div>
+      <div class="stat-value"><%= @tasks_count %></div>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon stat-icon-green">🏆</div>
+    <div>
+      <div class="stat-label"><%= t('admin.dashboard.completed') %></div>
+      <div class="stat-value"><%= @done_count %></div>
+    </div>
+  </div>
+</div>
+
+<div class="grid-2">
+  <div class="card">
+    <div class="card-header">
+      <h4>Recent Users</h4>
+      <%= link_to 'View All', admin_users_path, class: 'btn btn-ghost btn-sm' %>
+    </div>
+    <div class="table-wrapper" style="border:none; border-radius:0;">
+      <table>
+        <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Joined</th></tr></thead>
+        <tbody>
+          <% @recent_users.each do |user| %>
+            <tr>
+              <td><%= user.display_name %></td>
+              <td class="text-sm"><%= user.email %></td>
+              <td><% if user.admin? %><span class="badge badge-high">Admin</span><% else %><span class="badge badge-pending">Member</span><% end %></td>
+              <td class="text-sm text-muted"><%= user.created_at.strftime('%b %d') %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h4>Recent Tasks</h4>
+      <%= link_to 'View All', admin_tasks_path, class: 'btn btn-ghost btn-sm' %>
+    </div>
+    <div class="table-wrapper" style="border:none; border-radius:0;">
+      <table>
+        <thead><tr><th>Task</th><th>Status</th><th>Project</th></tr></thead>
+        <tbody>
+          <% @recent_tasks.each do |task| %>
+            <tr>
+              <td class="text-sm"><%= link_to task.title.truncate(30), task_path(task) %></td>
+              <td><span class="badge badge-<%= task.status %>"><%= t("tasks.statuses.#{task.status}") %></span></td>
+              <td class="text-sm text-muted"><%= task.project.name.truncate(20) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

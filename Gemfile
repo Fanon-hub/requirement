@@ -1,0 +1,55 @@
+source 'https://rubygems.org'
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+
+ruby '3.1.6'
+
+gem 'rails', '~> 6.1.7', '>= 6.1.7.6'
+gem 'pg', '~> 1.5'
+# gem 'unicorn'
+gem 'puma', '~> 7.0'
+gem 'sass-rails', '>= 6'
+gem 'turbolinks', '~> 5'
+gem 'jbuilder', '~> 2.7'
+gem 'bootsnap', '>= 1.4.4', require: false
+gem 'bcrypt', '~> 3.1.7'
+gem 'kaminari'
+gem 'rails-i18n', '~> 6.0'
+gem 'ransack'
+gem 'image_processing', '~> 1.2'
+gem 'concurrent-ruby', '1.3.4' 
+gem 'activeadmin', '~> 2.9'
+gem 'importmap-rails', '~> 2.2' 
+gem 'pundit' 
+gem 'kaminari'
+
+group :development, :test do
+  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'rspec-rails', '~> 5.0'
+  gem 'factory_bot_rails'
+  gem 'faker'
+end
+
+group :development do
+  gem 'web-console', '>= 4.1.0'
+  gem 'rack-mini-profiler', '>= 2.3.3'
+  gem 'listen', '~> 3.3'
+  gem 'spring'
+  
+end
+
+group :test do
+  gem 'capybara', '>= 3.26'
+  gem 'selenium-webdriver'
+  gem 'webdrivers'
+  gem 'shoulda-matchers', '~> 5.0'
+end
+
+group :production do
+  gem 'unicorn-worker-killer'  # auto-restarts unicorn workers on memory bloat
+end
+
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem "devise", "~> 4.9"
+
+gem "importmap-rails", "~> 2.2"

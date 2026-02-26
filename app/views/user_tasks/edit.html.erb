@@ -1,0 +1,82 @@
+<div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+
+  <h1 style="text-align: center; color: #333; margin-bottom: 30px;">Edit Task</h1>
+
+  <% if @task.errors.any? %>
+    <div id="error_explanation" style="background-color: #ffe6e6; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #ffcccc;">
+      <h2 style="color: #cc0000; margin-bottom: 10px;">
+        <%= pluralize(@task.errors.count, "error") %> prevented this task from being saved:
+      </h2>
+      <ul style="margin-left: 20px; color: #c62828;">
+        <% @task.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form_with model: [@project, @task], local: true, html: { style: "display: flex; flex-direction: column; gap: 18px;" } do |f| %>
+
+    <div>
+      <%= f.label :title, "Title", style: "font-weight: bold; display: block; margin-bottom: 6px; color: #444;" %>
+      <%= f.text_field :title, 
+                       style: "width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem;", 
+                       placeholder: "Enter task title" %>
+    </div>
+
+    <div>
+      <%= f.label :description, "Description", style: "font-weight: bold; display: block; margin-bottom: 6px; color: #444;" %>
+      <%= f.text_area :description, 
+                      rows: 6, 
+                      style: "width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem; resize: vertical;", 
+                      placeholder: "Describe the task..." %>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+      <div style="flex: 1; min-width: 200px;">
+        <%= f.label :status, "Status", style: "font-weight: bold; display: block; margin-bottom: 6px; color: #444;" %>
+        <%= f.select :status, 
+                     Task.statuses.keys.map { |s| [s.humanize, s] }, 
+                     {}, 
+                     style: "width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem;" %>
+      </div>
+
+      <div style="flex: 1; min-width: 200px;">
+        <%= f.label :priority, "Priority", style: "font-weight: bold; display: block; margin-bottom: 6px; color: #444;" %>
+        <%= f.select :priority, 
+                     Task.priorities.keys.map { |p| [p.humanize, p] }, 
+                     {}, 
+                     style: "width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem;" %>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+      <div style="flex: 1; min-width: 200px;">
+        <%= f.label :due_date, "Due Date", style: "font-weight: bold; display: block; margin-bottom: 6px; color: #444;" %>
+        <%= f.date_field :due_date, 
+                         style: "width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem;" %>
+      </div>
+
+      <div style="flex: 1; min-width: 200px;">
+        <%= f.label :assignee_id, "Assignee", style: "font-weight: bold; display: block; margin-bottom: 6px; color: #444;" %>
+        <%= f.collection_select :assignee_id, 
+                                User.all, 
+                                :id, 
+                                :display_name, 
+                                { prompt: "Select assignee..." }, 
+                                style: "width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem;" %>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
+      <%= f.submit "Update Task", 
+                   style: "background-color: #2196F3; color: white; padding: 12px 35px; border-radius: 6px; border: none; cursor: pointer; font-size: 1.1rem; box-shadow: 0 2px 6px rgba(0,0,0,0.1);" %>
+
+      <%= link_to "Cancel", project_tasks_path(@project), 
+                  style: "padding: 12px 35px; border: 1px solid #ccc; border-radius: 6px; text-decoration: none; color: #555; font-size: 1.1rem; background-color: white;" %>
+    </div>
+
+  <% end %>
+
+</div>

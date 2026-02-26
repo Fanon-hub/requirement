@@ -1,0 +1,46 @@
+<% content_for :title, t('admin.users.title') %>
+
+<div class="flex justify-between items-center mb-4">
+  <h1><%= t('admin.users.title') %></h1>
+</div>
+
+<div class="filter-bar mb-4">
+  <%= search_form_for @q, url: admin_users_path do |f| %>
+    <div class="form-group">
+      <%= f.search_field :name_or_email_cont, class: 'form-control', placeholder: 'Search by name or email...' %>
+    </div>
+    <%= f.submit t('actions.search'), class: 'btn btn-primary' %>
+    <%= link_to t('actions.cancel'), admin_users_path, class: 'btn btn-outline' %>
+  <% end %>
+</div>
+
+<div class="table-wrapper">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th><th>Email</th><th>Role</th><th>Guest</th><th>Joined</th><th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><div class="flex items-center gap-2"><div class="user-avatar user-avatar-sm"><%= user.initials %></div><%= user.display_name %></div></td>
+          <td class="text-sm"><%= user.email %></td>
+          <td><% if user.admin? %><span class="badge badge-high">Admin</span><% else %><span class="badge badge-pending">Member</span><% end %></td>
+          <td><% if user.guest? %><span class="badge badge-in_progress">Guest</span><% end %></td>
+          <td class="text-sm text-muted"><%= user.created_at.strftime('%b %d, %Y') %></td>
+          <td>
+            <div class="table-actions">
+              <%= link_to t('actions.edit'), edit_admin_user_path(user), class: 'btn btn-outline btn-sm' %>
+              <% unless user == current_user %>
+                <%= link_to t('actions.delete'), admin_user_path(user), method: :delete, data: { confirm: t('actions.confirm_delete') }, class: 'btn btn-danger btn-sm' %>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="mt-4"><%= paginate @users %></div>

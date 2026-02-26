@@ -1,0 +1,17 @@
+I, [2026-02-24T12:06:42.686378 #44212]  INFO -- : Refreshing Gem list
+I, [2026-02-24T12:06:44.889634 #44212]  INFO -- : listening on addr=/home/dell/requirement/taskflow/shared/tmp/sockets/unicorn.sock fd=17
+I, [2026-02-24T12:06:45.299618 #44212]  INFO -- : master process ready
+I, [2026-02-24T12:06:45.344945 #44266]  INFO -- : worker=0 ready
+I, [2026-02-24T12:06:45.344945 #44269]  INFO -- : worker=1 ready
+I, [2026-02-24T12:11:00.289351 #44212]  INFO -- : reaped #<Process::Status: pid 44266 exit 0> worker=0
+I, [2026-02-24T12:11:00.289848 #44212]  INFO -- : reaped #<Process::Status: pid 44269 exit 0> worker=1
+I, [2026-02-24T12:11:00.290546 #44212]  INFO -- : master complete
+I, [2026-02-24T12:11:35.736604 #45262]  INFO -- : Refreshing Gem list
+I, [2026-02-24T12:11:36.639455 #45262]  INFO -- : unlinking existing socket=/home/dell/requirement/taskflow/shared/tmp/sockets/unicorn.sock
+I, [2026-02-24T12:11:36.640186 #45262]  INFO -- : listening on addr=/home/dell/requirement/taskflow/shared/tmp/sockets/unicorn.sock fd=17
+I, [2026-02-24T12:11:36.855153 #45262]  INFO -- : master process ready
+I, [2026-02-24T12:11:36.891900 #45295]  INFO -- : worker=0 ready
+I, [2026-02-24T12:11:36.899801 #45296]  INFO -- : worker=1 ready
+I, [2026-02-24T12:12:30.457977 #45262]  INFO -- : reaped #<Process::Status: pid 45295 exit 0> worker=0
+I, [2026-02-24T12:12:30.458347 #45262]  INFO -- : reaped #<Process::Status: pid 45296 exit 0> worker=1
+I, [2026-02-24T12:12:30.458612 #45262]  INFO -- : master complete

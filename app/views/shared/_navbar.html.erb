@@ -1,0 +1,48 @@
+<nav class="navbar">
+  <div class="navbar-inner">
+    <%= link_to root_path, class: 'navbar-brand' do %>
+      <div class="brand-icon">⚡</div>
+      <%= t('app_name') %>
+    <% end %>
+
+    <% if user_signed_in? %>
+      <ul class="navbar-nav">
+        <li><%= link_to t('navigation.dashboard'), dashboard_path, class: (controller_name == 'user_dashboard' ? 'active' : '') %></li>
+        <li><%= link_to t('navigation.projects'), projects_path, class: (controller_name == 'projects' ? 'active' : '') %></li>
+        <li>
+          <%= link_to notifications_path, class: (controller_name == 'notifications' ? 'active' : '') do %>
+            <%= t('navigation.notifications') %>
+            <% if @unread_notifications_count.to_i > 0 %>
+              <span class="navbar-badge"><%= @unread_notifications_count %></span>
+            <% end %>
+          <% end %>
+        </li>
+        <% if current_user&.admin? %>
+          <li><%= link_to t('navigation.admin_panel'), admin_root_path %></li>
+        <% end %>
+      </ul>
+
+      <div class="navbar-user">
+        <div class="user-avatar"><%= current_user.initials %></div>
+        <%= link_to current_user.display_name, user_path(current_user), class: 'btn-nav-outline btn' %>
+
+        <%= button_to t('navigation.logout'),
+              destroy_user_session_path,
+              method: :delete,
+              class: "btn btn-outline btn-sm text-red-600 border-red-600 hover:bg-red-50",
+              form: { data: { turbo_confirm: t('navigation.logout_confirm') || "Are you sure you want to log out?" } } %>
+      </div>
+
+    <% else %>
+      <div class="navbar-user">
+        <%= link_to t('navigation.login'),
+              new_user_session_path,
+              class: 'btn-nav-outline btn' %>
+
+        <%= link_to t('navigation.signup'),
+              new_user_registration_path,
+              class: 'btn-nav-primary btn' %>
+      </div>
+    <% end %>
+  </div>
+</nav> 

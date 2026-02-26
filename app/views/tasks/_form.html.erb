@@ -1,0 +1,34 @@
+<%= render 'shared/error_messages', object: @task %>
+
+<div class="form-group">
+  <%= f.label :title, t('tasks.fields.title'), class: 'form-label' %>
+  <%= f.text_field :title, class: "form-control #{@task.errors[:title].any? ? 'is-invalid' : ''}", placeholder: t('tasks.fields.title_placeholder') %>
+</div>
+
+<div class="form-group">
+  <%= f.label :description, t('tasks.fields.description'), class: 'form-label' %>
+  <%= f.text_area :description, class: 'form-control', placeholder: t('tasks.fields.description_placeholder'), rows: 4 %>
+</div>
+
+<div class="grid-2">
+  <div class="form-group">
+    <%= f.label :status, t('tasks.fields.status'), class: 'form-label' %>
+    <%= f.select :status, Task.statuses.keys.map { |s| [t("tasks.statuses.#{s}"), s] }, {}, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :priority, t('tasks.fields.priority'), class: 'form-label' %>
+    <%= f.select :priority, Task.priorities.keys.map { |p| [t("tasks.priorities.#{p}"), p] }, {}, class: 'form-control' %>
+  </div>
+</div>
+
+<div class="grid-2">
+  <div class="form-group">
+    <%= f.label :due_date, t('tasks.fields.due_date'), class: 'form-label' %>
+    <%= f.date_field :due_date, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :assignee_id, t('tasks.fields.assignee'), class: 'form-label' %>
+    <% members = @task.project ? @task.project.members.by_name : User.by_name %>
+    <%= f.select :assignee_id, options_from_collection_for_select(members, :id, :display_name, @task.assignee_id), { include_blank: '— Unassigned —' }, class: 'form-control' %>
+  </div>
+</div>

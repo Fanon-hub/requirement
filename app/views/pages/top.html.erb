@@ -1,0 +1,104 @@
+<% content_for :title, t('Taskflow') %>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-label">✦ Team Task Management</div>
+      <h1>Manage tasks.<br><span>Ship faster</span> together.</h1>
+      <p class="hero-description">
+        <%= t('app_description') %>
+        Stop juggling emails, spreadsheets, and chat tools. 
+        TaskFlow brings everything into one clear, collaborative workspace.
+      </p>
+      <div class="hero-actions">
+        <%= link_to t('navigation.signup'), new_user_registration_path, class: 'btn btn-amber btn-lg' %>
+        <%= link_to t('navigation.login'),  new_user_session_path, class: 'btn btn-outline btn-lg', style: 'color:white;border-color:rgba(255,255,255,0.3)' %>
+      </div>
+      <div style="display:flex; gap:1rem; margin-top:1.25rem; flex-wrap:wrap;">
+        <%= button_to t('navigation.guest_login'),       users_guest_login_path,       class: 'btn btn-ghost btn-sm', style: 'color:var(--slate-400);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1)' %>
+        <%= button_to t('navigation.admin_guest_login'), users_admin_guest_login_path, class: 'btn btn-ghost btn-sm', style: 'color:var(--slate-400);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1)' %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section">
+  <div class="container">
+    <h2 class="features-title">Everything your team needs</h2>
+    <p class="features-subtitle">A complete task management solution built for modern teams.</p>
+
+    <div class="grid-3">
+      <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <h3 class="feature-title">Centralized Tasks</h3>
+        <p class="feature-description">All team tasks in one place. No more digging through emails or chat threads to find what needs to be done.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3 class="feature-title">Real-time Progress</h3>
+        <p class="feature-description">Track progress across all projects instantly. Dashboards give you a clear picture of what's pending, in-progress, or done.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">👥</div>
+        <h3 class="feature-title">Team Collaboration</h3>
+        <p class="feature-description">Assign tasks, add members to projects, leave comments, and stay in sync with your entire team — all in one tool.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔔</div>
+        <h3 class="feature-title">Notifications</h3>
+        <p class="feature-description">Get notified when tasks are assigned to you or when important updates happen. Never miss a critical deadline again.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏷️</div>
+        <h3 class="feature-title">Priority Management</h3>
+        <p class="feature-description">Set task priorities — low, medium, or high — and filter by due dates to focus your team on what matters most.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔐</div>
+        <h3 class="feature-title">Role-based Access</h3>
+        <p class="feature-description">Admins manage the full workspace. Project managers control their teams. Members stay focused on their tasks.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section style="padding:4rem 0; background:var(--slate-50);">
+  <div class="container">
+    <h2 style="text-align:center; margin-bottom:0.75rem;">How TaskFlow works</h2>
+    <p style="text-align:center; color:var(--slate-500); margin-bottom:3rem;">Three steps to a more organized team.</p>
+
+    <div class="grid-3">
+      <div style="text-align:center; padding:1.5rem;">
+        <div style="font-size:2.5rem; font-family:var(--font-mono); font-weight:700; color:var(--amber); margin-bottom:1rem;">01</div>
+        <h3 style="margin-bottom:0.5rem;">Create a Project</h3>
+        <p style="color:var(--slate-500); font-size:0.9rem;">Set up a project, add your team members, and define the timeline.</p>
+      </div>
+      <div style="text-align:center; padding:1.5rem;">
+        <div style="font-size:2.5rem; font-family:var(--font-mono); font-weight:700; color:var(--amber); margin-bottom:1rem;">02</div>
+        <h3 style="margin-bottom:0.5rem;">Add & Assign Tasks</h3>
+        <p style="color:var(--slate-500); font-size:0.9rem;">Break work into tasks, set priorities and due dates, assign to the right people.</p>
+      </div>
+      <div style="text-align:center; padding:1.5rem;">
+        <div style="font-size:2.5rem; font-family:var(--font-mono); font-weight:700; color:var(--amber); margin-bottom:1rem;">03</div>
+        <h3 style="margin-bottom:0.5rem;">Track & Complete</h3>
+        <p style="color:var(--slate-500); font-size:0.9rem;">Monitor progress, update task statuses, and celebrate when work is done.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="container">
+    <h2>Ready to get your team organized?</h2>
+    <p>Join TaskFlow today — free to get started.</p>
+    <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+      <%= link_to t('navigation.signup'), new_user_registration_path, class: 'btn btn-amber btn-lg' %>
+      <%= button_to t('navigation.guest_login'), users_guest_login_path, class: 'btn btn-outline btn-lg', style: 'color:var(--slate-300);border-color:var(--slate-600)' %>
+    </div>
+  </div>
+</section>

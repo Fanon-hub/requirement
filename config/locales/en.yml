@@ -1,0 +1,253 @@
+en:
+  app_name: "TaskFlow"
+  tagline: "Team Task Management, Simplified"
+  app_description: "Centralize your team's tasks, track progress in real-time, and collaborate efficiently."
+
+  navigation:
+    home: "Home"
+    dashboard: "Dashboard"
+    projects: "Projects"
+    tasks: "Tasks"
+    notifications: "Notifications"
+    login: "Login"
+    logout: "Logout"
+    signup: "Sign Up"
+    admin_panel: "Admin Panel"
+    guest_login: "Try as Guest"
+    admin_guest_login: "Admin Demo"
+    profile: "My Profile"
+    new_project: "New Project"
+    new_task: "New Task"
+    members: "Members"
+
+  sessions:
+    new:
+      title: "Sign in to TaskFlow"
+      subtitle: "Welcome back! Enter your credentials to continue."
+      login_button: "Sign In"
+      no_account: "Don't have an account?"
+      or: "or"
+    logged_in: "Welcome back! You are now signed in."
+    logged_out: "You have been signed out. See you soon!"
+    invalid_credentials: "Invalid email or password. Please try again."
+    guest_login: "Signed in as Guest User. Feel free to explore!"
+    admin_guest_login: "Signed in as Admin Guest. Full access enabled."
+
+  users:
+    new:
+      title: "Create your account"
+      subtitle: "Join TaskFlow and start managing tasks with your team."
+      submit: "Create Account"
+      have_account: "Already have an account?"
+    created: "Account created successfully! Welcome to TaskFlow."
+    updated: "Profile updated successfully."
+    fields:
+      name: "Full Name"
+      email: "Email Address"
+      password: "Password"
+      password_confirmation: "Confirm Password"
+      name_placeholder: "Enter your full name"
+      email_placeholder: "you@example.com"
+      password_placeholder: "At least 8 characters"
+
+  projects:
+    index:
+      search_placeholder: "Search projects..."
+      all_statuses: "All Statuses"
+      title: "Projects"
+      subtitle: "Manage and track all your team projects."
+      empty: "No projects found. Create your first project!"
+    show:
+      title: "Project Details"
+      tasks_section: "Tasks"
+      members_section: "Team Members"
+    new:
+      title: "Create New Project"
+      subtitle: "Set up a new project for your team."
+    edit:
+      title: "Edit Project"
+    members:
+      title: "Project Members"
+    created: "Project was successfully created."
+    updated: "Project was successfully updated."
+    deleted: "Project was successfully deleted."
+    member_added: "Team member added successfully."
+    member_removed: "Team member removed."
+    fields:
+      name: "Project Name"
+      description: "Description"
+      status: "Status"
+      start_date: "Start Date"
+      end_date: "End Date"
+      project_manager: "Project Manager"
+      name_placeholder: "e.g. Website Redesign"
+      description_placeholder: "Describe the project goals and scope..."
+    statuses:
+      planning: "Planning"
+      active: "Active"
+      on_hold: "On Hold"
+      completed: "Completed"
+
+  tasks:
+    index:
+      title: "Tasks"
+      subtitle: "View and manage all tasks for this project."
+      empty: "No tasks yet. Create the first task!"
+    show:
+      title: "Task Details"
+      comments_section: "Comments"
+      no_comments: "No comments yet. Be the first to comment!"
+      add_comment: "Add a Comment"
+    new:
+      title: "Create New Task"
+      subtitle: "Add a task to the project."
+    edit:
+      title: "Edit Task"
+    created: "Task was successfully created."
+    updated: "Task was successfully updated."
+    deleted: "Task was successfully deleted."
+    status_updated: "Task status updated."
+    status_update_failed: "Failed to update task status."
+    fields:
+      title: "Task Title"
+      description: "Description"
+      status: "Status"
+      priority: "Priority"
+      due_date: "Due Date"
+      assignee: "Assign To"
+      title_placeholder: "e.g. Design the login page"
+      description_placeholder: "Describe what needs to be done..."
+    statuses:
+      pending: "Pending"
+      in_progress: "In Progress"
+      done: "Done"
+    priorities:
+      low: "Low"
+      medium: "Medium"
+      high: "High"
+
+  task_comments:
+    created: "Comment added."
+    deleted: "Comment deleted."
+    fields:
+      comment_text: "Your Comment"
+      comment_text_placeholder: "Write your comment here..."
+
+  notifications:
+    index:
+      title: "Notifications"
+      empty: "You're all caught up! No notifications."
+    all_marked_read: "All notifications marked as read."
+    task_assigned: "You have been assigned to task: %{task_title}"
+    mark_read: "Mark as read"
+    mark_all_read: "Mark all as read"
+
+  dashboard:
+    index:
+      title: "Dashboard"
+      welcome: "Welcome back, %{name}!"
+      subtitle: "Here's an overview of your tasks and projects."
+      my_tasks: "My Tasks"
+      my_projects: "My Projects"
+      pending_tasks: "Pending"
+      in_progress_tasks: "In Progress"
+      done_tasks: "Completed"
+      overdue_tasks: "Overdue Tasks"
+      completion_rate: "Completion Rate"
+      no_projects: "You haven't joined any projects yet."
+      no_tasks: "No tasks assigned to you."
+      no_overdue: "No overdue tasks. Great work!"
+
+  errors:
+    not_found: "The page you were looking for doesn't exist."
+    internal_server_error: "Something went wrong on our end. We're working on it!"
+    not_authorized: "You are not authorized to perform this action."
+    login_required: "Please sign in to continue."
+    not_found_title: "404 — Page Not Found"
+    server_error_title: "500 — Server Error"
+    back_home: "Back to Home"
+
+  admin:
+    dashboard:
+      title: "Admin Dashboard"
+      users: "Total Users"
+      projects: "Total Projects"
+      tasks: "Total Tasks"
+      completed: "Completed Tasks"
+    users:
+      title: "Manage Users"
+      updated: "User updated successfully."
+      deleted: "User deleted successfully."
+      cannot_delete_self: "You cannot delete your own account."
+    projects:
+      title: "Manage Projects"
+    tasks:
+      title: "Manage Tasks"
+
+  project_members:
+    roles:
+      viewer: "Viewer"
+      contributor: "Contributor"
+      manager: "Manager"
+
+  helpers:
+    submit:
+      create: "Create %{model}"
+      update: "Update %{model}"
+
+  actions:
+    edit: "Edit"
+    delete: "Delete"
+    cancel: "Cancel"
+    clear: "Clear"
+    back: "Back"
+    save: "Save"
+    submit: "Submit"
+    search: "Search"
+    filter: "Filter"
+    view: "View"
+    add: "Add"
+    remove: "Remove"
+    confirm_delete: "Are you sure you want to delete this? This action cannot be undone."
+
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            name:
+              blank: "Name cannot be blank"
+              too_long: "Name is too long (maximum 50 characters)"
+            email:
+              blank: "Email cannot be blank"
+              taken: "Email is already registered"
+              invalid: "Email format is invalid"
+        project:
+          attributes:
+            name:
+              blank: "Project name cannot be blank"
+              too_long: "Project name is too long (maximum 100 characters)"
+            end_date:
+              after_start_date: "must be after start date"
+        task:
+          attributes:
+            title:
+              blank: "Task title cannot be blank"
+              too_long: "Title is too long (maximum 200 characters)"
+            comment_text:
+              blank: "Comment cannot be blank"
+        project_member:
+          attributes:
+            user_id:
+              already_member: "User is already a member of this project"
+        task_comment:
+          attributes:
+            comment_text:
+              blank: "Comment cannot be blank"
+              too_long: "Comment is too long (maximum 1000 characters)"
+
+  date:
+    formats:
+      default: "%B %d, %Y"
+      short: "%b %d, %Y"
+      long: "%A, %B %d, %Y" 

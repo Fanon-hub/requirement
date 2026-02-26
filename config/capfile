@@ -1,0 +1,13 @@
+# Capfile
+# Load Capistrano core and plugins
+
+require 'capistrano/setup'
+require 'capistrano/deploy'
+
+require 'capistrano/rails'         # asset precompile + db:migrate
+require 'capistrano/bundler'       # bundle install on server
+require 'capistrano/rbenv'         # manage Ruby version via rbenv
+require 'capistrano3/unicorn'      # unicorn start/stop/restart tasks
+
+# Load custom tasks from lib/capistrano/tasks/*.rake
+Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }

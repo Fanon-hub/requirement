@@ -1,0 +1,195 @@
+<% content_for :title, @project.name %>
+
+<div class="page-header">
+  <div class="container">
+    <div>
+      <div class="text-sm text-muted mb-1"><%= link_to t('navigation.projects'), projects_path %> /</div>
+      <h1 class="page-title"><%= @project.name %></h1>
+      <div style="display:flex; align-items:center; gap:0.75rem; margin-top:0.5rem;">
+        <span class="badge badge-<%= @project.status %>"><%= t("projects.statuses.#{@project.status}") %></span>
+        <span class="text-sm text-muted">Managed by <%= @project.project_manager.display_name %></span>
+        <% if @project.end_date %>
+          <span class="text-sm text-muted">📅 Due <%= @project.end_date.strftime('%b %d, %Y') %></span>
+        <% end %>
+      </div>
+    </div>
+    <div class="page-actions">
+      <%= link_to t('navigation.new_task'), new_project_task_path(@project), class: 'btn btn-amber' %>
+      <% if @project.project_manager == current_user || current_user.admin? %>
+        <%= link_to t('navigation.members'), members_project_path(@project), class: 'btn btn-outline' %>
+        <%= link_to t('actions.edit'), edit_project_task_path(@project), class: 'btn btn-outline' %>
+        <%= link_to t('actions.delete'), project_path(@project), method: :delete, data: { confirm: t('actions.confirm_delete') }, class: 'btn btn-danger' %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="page-content">
+  <div class="container">
+    <div class="detail-layout">
+
+      <!-- Main Content: Tasks -->
+      <div>
+        <% if @project.description.present? %>
+          <div class="card mb-4">
+            <div class="card-body">
+              <p><%= @project.description %></p>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Task Filter -->
+        <div class="filter-bar">
+          <%= search_form_for @q, url: project_path(@project) do |f| %>
+            <div class="form-group">
+              <%= f.search_field :title_cont, class: 'form-control', placeholder: 'Search tasks...' %>
+            </div>
+            <div class="form-group">
+              <%= f.select :status_eq, Task.statuses.keys.map { |s| [t("tasks.statuses.#{s}"), s] }, { include_blank: 'All statuses' }, class: 'form-control' %>
+            </div>
+            <div class="form-group">
+              <%= f.select :priority_eq, Task.priorities.keys.map { |p| [t("tasks.priorities.#{p}"), p] }, { include_blank: 'All priorities' }, class: 'form-control' %>
+            </div>
+            <div style="display:flex; align-items:flex-end; gap:0.5rem;">
+              <%= f.submit t('actions.filter'), class: 'btn btn-primary btn-sm' %>
+              <%= link_to 'Clear', project_path(@project), class: 'btn btn-outline btn-sm' %>
+            </div>
+          <% end %>
+        </div>
+
+        <h2 style="font-size:1.125rem; margin-bottom:1rem;"><%= t('projects.show.tasks_section') %> (<%= @tasks.total_count %>)</h2>
+
+        <% if @tasks.empty? %>
+          <div class="card">
+            <div class="empty-state">
+              <div class="empty-state-icon">✅</div>
+              <p><%= t('tasks.index.empty') %></p>
+              <%= link_to t('navigation.new_task'), new_project_task_path(@project), class: 'btn btn-amber' %>
+            </div>
+          </div>
+        <% else %>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Task</th>
+                  <th>Status</th>
+                  <th>Priority</th>
+                  <th>Assignee</th>
+                  <th>Due Date</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @tasks.each do |task| %>
+                  <tr>
+                    <td>
+                      <%= link_to task.title, project_task_path(@project, task), class: 'task-title-link' %>
+                      <% if task.overdue? %>
+                        <span style="color:var(--red); font-size:0.75rem; margin-left:0.375rem;">Overdue</span>
+                      <% end %>
+                    </td>
+                    <td><span class="badge badge-<%= task.status %>"><%= t("tasks.statuses.#{task.status}") %></span></td>
+                    <td><span class="badge badge-<%= task.priority %>"><%= t("tasks.priorities.#{task.priority}") %></span></td>
+                    <td>
+                      <% if task.assignee %>
+                        <div class="flex items-center gap-2">
+                          <div class="user-avatar user-avatar-sm"><%= task.assignee.initials %></div>
+                          <span class="text-sm"><%= task.assignee.display_name %></span>
+                        </div>
+                      <% else %>
+                        <span class="text-muted text-sm">Unassigned</span>
+                      <% end %>
+                    </td>
+                    <td class="<%= 'text-sm' %>">
+                      <% if task.due_date %>
+                        <span style="<%= task.overdue? ? 'color:var(--red);' : '' %>font-family:var(--font-mono);font-size:0.8rem;">
+                          <%= task.due_date.strftime('%b %d, %Y') %>
+                        </span>
+                      <% else %>
+                        <span class="text-muted text-sm">—</span>
+                      <% end %>
+                    </td>
+                    <td>
+                      <div class="table-actions">
+                        <%= link_to t('actions.view'), project_task_path(@project, task), class: 'btn btn-ghost btn-sm' %>
+                        <% if task.creator == current_user || current_user.admin? %>
+                          <%= link_to t('actions.edit'), edit_project_task_path(@project, task), class: 'btn btn-outline btn-sm' %>
+                        <% end %>
+                      </div>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          <div class="mt-4"><%= paginate @tasks %></div>
+        <% end %>
+      </div>
+
+      <!-- Sidebar -->
+      <div>
+        <!-- Project Stats -->
+        <div class="sidebar-card">
+          <div class="sidebar-card-title">Project Stats</div>
+          <div class="sidebar-item">
+            <div class="sidebar-item-label">Completion</div>
+            <div style="margin-top:0.375rem;">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width:<%= @project.task_completion_rate %>%"></div>
+              </div>
+              <div class="text-xs text-muted mt-1"><%= @project.task_completion_rate %>% complete</div>
+            </div>
+          </div>
+          <div class="sidebar-item">
+            <div class="sidebar-item-label">Total Tasks</div>
+            <div class="sidebar-item-value"><%= @project.tasks.count %></div>
+          </div>
+          <div class="sidebar-item">
+            <div class="sidebar-item-label">Pending</div>
+            <div class="sidebar-item-value"><%= @project.tasks.pending.count %></div>
+          </div>
+          <div class="sidebar-item">
+            <div class="sidebar-item-label">In Progress</div>
+            <div class="sidebar-item-value"><%= @project.tasks.in_progress.count %></div>
+          </div>
+          <div class="sidebar-item">
+            <div class="sidebar-item-label">Done</div>
+            <div class="sidebar-item-value"><%= @project.tasks.done.count %></div>
+          </div>
+          <% if @project.start_date %>
+            <div class="sidebar-item">
+              <div class="sidebar-item-label">Start Date</div>
+              <div class="sidebar-item-value"><%= @project.start_date.strftime('%b %d, %Y') %></div>
+            </div>
+          <% end %>
+          <% if @project.end_date %>
+            <div class="sidebar-item">
+              <div class="sidebar-item-label">End Date</div>
+              <div class="sidebar-item-value"><%= @project.end_date.strftime('%b %d, %Y') %></div>
+            </div>
+          <% end %>
+        </div>
+
+        <!-- Members -->
+        <div class="sidebar-card">
+          <div class="sidebar-card-title"><%= t('projects.show.members_section') %> (<%= @members.count %>)</div>
+          <% @members.first(5).each do |member| %>
+            <div class="member-item">
+              <div class="user-avatar user-avatar-sm"><%= member.initials %></div>
+              <div class="member-info">
+                <div class="member-name"><%= member.display_name %></div>
+              </div>
+            </div>
+          <% end %>
+          <% if @members.count > 5 %>
+            <div style="padding:0.75rem 1.125rem;">
+              <%= link_to "View all #{@members.count} members", members_project_path(@project), class: 'text-sm', style: 'color:var(--slate-500)' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<footer class="footer">
+  <div class="footer-inner" style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 2rem; padding: 1.5rem 1rem; max-width: 1200px; margin: 0 auto;">
+    <!-- Brand & Copyright -->
+    <div class="footer-brand-section" style="text-align: center;">
+      <div class="footer-brand">⚡ <%= t('Taskflow') %></div>
+      <div style="font-size: 0.8rem; margin-top: 0.25rem; opacity: 0.8;">
+        © <%= Date.today.year %> TaskFlow. All rights reserved.
+      </div>
+    </div>
+
+    <!-- Links -->
+    <div class="footer-links" style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+      <%= link_to t('navigation.home'), root_path %>
+      <% if user_signed_in? %>
+        <%= link_to t('navigation.projects'), projects_path %>
+        <%= link_to t('navigation.dashboard'), dashboard_path %>
+      <% end %>
+    </div>
+  </div>
+</footer>
