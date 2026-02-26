@@ -12,7 +12,7 @@ Database: PostgreSQL
 
 ## Execution Procedure
 1. Clone repo: `git clone https://github.com/Fanon-hub/requirement.git`
-2. `cd requirement`
+2. `cd requirement/taskflow`
 3. `bundle install`
 4. `yarn install`
 5. `rails db:create db:migrate`
