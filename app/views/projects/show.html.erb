@@ -13,8 +13,10 @@
         <% end %>
       </div>
     </div>
-    <div class="page-actions">
-      <%= link_to t('navigation.new_task'), new_project_task_path(@project), class: 'btn btn-amber' %>
+      <div class="page-actions">
+      <% if current_user.can_contribute_to?(@project) %>
+        <%= link_to t('navigation.new_task'), new_project_task_path(@project), class: 'btn btn-amber' %>
+      <% end %>
       <% if @project.project_manager == current_user || current_user.admin? %>
         <%= link_to t('navigation.members'), members_project_path(@project), class: 'btn btn-outline' %>
         <%= link_to t('actions.edit'), edit_project_task_path(@project), class: 'btn btn-outline' %>
@@ -61,10 +63,12 @@
 
         <% if @tasks.empty? %>
           <div class="card">
-            <div class="empty-state">
+              <div class="empty-state">
               <div class="empty-state-icon">✅</div>
               <p><%= t('tasks.index.empty') %></p>
-              <%= link_to t('navigation.new_task'), new_project_task_path(@project), class: 'btn btn-amber' %>
+              <% if current_user.can_contribute_to?(@project) %>
+                <%= link_to t('navigation.new_task'), new_project_task_path(@project), class: 'btn btn-amber' %>
+              <% end %>
             </div>
           </div>
         <% else %>
@@ -178,7 +182,7 @@
             <div class="member-item">
               <div class="user-avatar user-avatar-sm"><%= member.initials %></div>
               <div class="member-info">
-                <div class="member-name"><%= member.display_name %></div>
+                <div class="member-name"><%= member.name %></div>
               </div>
             </div>
           <% end %>

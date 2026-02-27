@@ -14,7 +14,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'bcrypt', '~> 3.1.7'
 gem 'kaminari'
 gem 'rails-i18n', '~> 6.0'
-gem 'ransack'
+gem 'ransack', '~> 3.2'
 gem 'image_processing', '~> 1.2'
 gem 'concurrent-ruby', '1.3.4' 
 gem 'activeadmin', '~> 2.9'

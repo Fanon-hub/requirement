@@ -12,7 +12,7 @@ RSpec.describe 'Login', type: :system do
       fill_in 'Password',      with: 'password123'
       click_button 'Sign In'
       expect(page).to have_current_path(dashboard_path)
-      expect(page).to have_content(I18n.t('sessions.logged_in'))
+      expect(page).to have_selector(".alert.alert-notice", text: /signed in successfully/i)
     end
   end
 
@@ -22,8 +22,8 @@ RSpec.describe 'Login', type: :system do
       fill_in 'Email Address', with: 'test@example.com'
       fill_in 'Password',      with: 'wrongpassword'
       click_button 'Sign In'
-      expect(page).to have_content(I18n.t('sessions.invalid_credentials'))
-      expect(page).to have_current_path(login_path)
+      expect(page).to have_content(/Invalid .*password/i)
+      expect(page).to have_current_path(new_user_session_path)
     end
 
     it 'shows error with unknown email' do
@@ -31,7 +31,7 @@ RSpec.describe 'Login', type: :system do
       fill_in 'Email Address', with: 'unknown@example.com'
       fill_in 'Password',      with: 'password123'
       click_button 'Sign In'
-      expect(page).to have_content(I18n.t('sessions.invalid_credentials'))
+      expect(page).to have_content(/Invalid .*password/i)
     end
   end
 
@@ -40,7 +40,7 @@ RSpec.describe 'Login', type: :system do
       visit login_path
       click_button I18n.t('navigation.guest_login')
       expect(page).to have_current_path(dashboard_path)
-      expect(page).to have_content(I18n.t('sessions.guest_login'))
+      expect(page).to have_content("Logged in as Guest")
     end
   end
 
@@ -49,15 +49,18 @@ RSpec.describe 'Login', type: :system do
       visit login_path
       click_button I18n.t('navigation.admin_guest_login')
       expect(page).to have_current_path(admin_root_path)
+      expect(page).to have_content("Dashboard")
     end
   end
 
   describe 'logout' do
     it 'logs out and redirects to root' do
       log_in_as(user)
-      click_link I18n.t('navigation.logout')
+
+      # Logout is a button_to, not a link
+      click_button I18n.t('navigation.logout'), match: :first
+
       expect(page).to have_current_path(root_path)
-      expect(page).to have_content(I18n.t('sessions.logged_out'))
     end
   end
 

@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: 'registrations' }
 
+  # Friendly alias used by specs and views
+  devise_scope :user do
+    get 'login', to: 'devise/sessions#new', as: :login
+  end
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
@@ -10,14 +15,15 @@ Rails.application.routes.draw do
 
   resources :users, only: [:show, :edit, :update]
 
-  resources :projects, controller: 'user_projects' do
+  resources :projects do
+    resources :tasks 
     member do
       get    :members
       post   :add_member
       delete :remove_member
     end
 
-    resources :tasks, controller: 'user_tasks' do
+    resources :tasks do
       resources :task_comments, only: [:create, :destroy], shallow: true
       member do
         patch :update_status

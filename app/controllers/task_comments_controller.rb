@@ -5,20 +5,24 @@ class TaskCommentsController < ApplicationController
   before_action :authorize_comment!, only: [:destroy]
 
   def create
-    @comment = @task.task_comments.build(comment_params)
+    @project = Project.find(params[:project_id])
+    @task = @project.tasks.find(params[:task_id])
+    @comment = @task.task_comments.build(task_comment_params)
     @comment.user = current_user
+
     if @comment.save
-      redirect_to task_path(@task), notice: t('task_comments.created')
+      redirect_to project_task_path(@project, @task),
+                notice: t('task_comments.created') || "Comment posted successfully."
     else
-      @comments = @task.task_comments.includes(:user).recent
-      render 'tasks/show'
+    redirect_to project_task_path(@project, @task),
+                alert: t('task_comments.create_failed') || "Failed to post comment."
     end
   end
 
   def destroy
     task = @comment.task
     @comment.destroy
-    redirect_to task_path(task), notice: t('task_comments.deleted')
+    redirect_to project_task_path(task.project, task), notice: t('task_comments.deleted')
   end
 
   private
@@ -33,11 +37,11 @@ class TaskCommentsController < ApplicationController
 
   def authorize_comment!
     unless @comment.user == current_user || current_user.admin?
-      redirect_to task_path(@comment.task), alert: t('errors.not_authorized')
+      redirect_to project_task_path(@comment.task.project, @comment.task), alert: t('errors.not_authorized')
     end
   end
 
-  def comment_params
+  def task_comment_params
     params.require(:task_comment).permit(:comment_text)
   end
 end

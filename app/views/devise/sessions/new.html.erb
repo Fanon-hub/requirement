@@ -24,7 +24,10 @@
           <%= f.check_box :remember_me %>
           <%= f.label :remember_me, t('sessions.new.remember_me'), class: 'form-check-label' %>
         </div>
-        
+
+        <div class="form-group" style="margin-top:1rem;"> 
+          <%= link_to t('sessions.new.forgot_password'), new_user_password_path, class: 'text-sm', style: 'font-weight:600;' %>
+        </div> 
 
         <div style="margin-top:1.5rem;">
           <%= f.submit t('sessions.new.login_button'), class: 'btn btn-primary w-100 btn-lg' %>

@@ -98,7 +98,7 @@ projects.each_with_index do |project, i|
   assigned_users = [users[i % 5], users[(i + 1) % 5], users[(i + 2) % 5]]
   assigned_users.each do |user|
     ProjectMember.find_or_create_by!(project: project, user: user) do |pm|
-      pm.role      = [:viewer, :editor, :manager, :admin].sample
+      pm.role      = [:viewer, :contributor, :manager, :admin].sample
       pm.joined_at = Date.today - rand(1..30).days
     end
   end
@@ -123,6 +123,10 @@ task_templates = [
 
 projects.each do |project|
   task_templates.first(5).each_with_index do |tmpl, i|
+    # Get project members to assign tasks to
+    project_members = project.users.to_a
+    assignee = project_members.sample || admin
+    
     task = Task.find_or_create_by!(title: "#{project.name} — #{tmpl[:title]}") do |t|
       t.description = tmpl[:description]
       t.status      = tmpl[:status]
@@ -130,12 +134,12 @@ projects.each do |project|
       t.due_date    = Date.today + ((i + 1) * 7).days
       t.project     = project
       t.creator     = admin
-      t.assignee    = users.sample
+      t.assignee    = assignee
     end
 
     # Add comments to each task
     3.times do |j|
-      TaskComment.find_or_create_by!(task: task, user: users.sample, comment_text: "Update #{j+1}: Work on '#{task.title}' is progressing as planned. No blockers at this time.") do |c|
+      TaskComment.find_or_create_by!(task: task, user: project_members.sample || admin, comment_text: "Update #{j+1}: Work on '#{task.title}' is progressing as planned. No blockers at this time.") do |c|
       end
     end
   end

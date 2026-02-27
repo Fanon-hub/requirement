@@ -1,13 +1,15 @@
 class ProjectMember < ApplicationRecord
   enum role: {
-    viewer:   0,
-    editor:   1,
-    manager:  2,
-    admin:    3
+    viewer:   "viewer",
+    contributor: "contributor", 
+    manager:  "manager",
+    admin:    "admin"
   }, _prefix: true
 
   belongs_to :project
   belongs_to :user
+
+  delegate :initials, :name, :email, to: :user, allow_nil: true 
 
   validates :role,      presence: true
   validates :joined_at, presence: true

@@ -1,0 +1,46 @@
+en:
+  projects:
+    created: "Project was successfully created."
+    updated: "Project was successfully updated."
+    deleted: "Project was successfully deleted."
+  tasks:
+    created: "Task was successfully created."
+    created_successfully: "Task was successfully created."
+    updated_successfully: "Task was successfully updated."
+    deleted_successfully: "Task was successfully deleted."
+    updated: "Task was successfully updated."
+    deleted: "Task was successfully deleted."
+    status_updated: "Task status updated."
+    status_update_failed: "Task status update failed."
+    fields:
+      title: "Title"
+      description: "Description"
+      priority: "Priority"
+    priorities:
+      high: "High"
+      medium: "Medium"
+      low: "Low"
+    statuses:
+      pending: "Pending"
+      in_progress: "In Progress"
+      done: "Done"
+  actions:
+    confirm_delete: "Are you sure?"
+    delete: "Delete"
+  navigation:
+    admin_panel: "Admin Panel"
+    logout: "Logout"
+    guest_login: "Login as Guest"
+    admin_guest_login: "Login as Admin Guest"
+  sessions:
+    logged_in: "Successfully signed in"
+    invalid_credentials: "Invalid email or password"
+    guest_login: "Logged in as guest"
+    logged_out: "Logged out successfully"
+  errors:
+    login_required: "You need to log in first"
+    not_authorized: "You are not authorized to perform this action"
+  helpers:
+    submit:
+      create: "Create %{model}"
+      update: "Update %{model}"

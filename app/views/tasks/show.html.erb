@@ -18,10 +18,10 @@
     </div>
     <div class="page-actions">
       <% if @task.creator == current_user || current_user.admin? %>
-        <%= link_to t('actions.edit'), edit_project_task_path(@task.project, @task), class: 'btn btn-outline' %>
+        <%= link_to t('actions.edit'), edit_project_task_path(@project, @task), class: 'btn btn-outline' %>
         <% if @task.creator == current_user || current_user.admin? %>
           <%= button_to t('actions.delete'),
-                        task_path(@task),
+                        project_task_path(@project, @task),
                         method: :delete,
                         data: { confirm: t('actions.confirm_delete') },
                         form: { 
@@ -78,7 +78,7 @@
             <!-- Add Comment -->
             <div style="margin-bottom:1.5rem; padding-bottom:1.5rem; border-bottom:1px solid var(--slate-200);">
               <h5 style="font-size:0.875rem; margin-bottom:0.75rem;"><%= t('tasks.show.add_comment') %></h5>
-              <%= form_with model: [@task, @comment], url: task_task_comments_path(@task), local: true do |f| %>
+              <%= form_with model: [@project, @task, @comment], url: project_task_task_comments_path(@project, @task), local: true do |f| %>
                 <%= render 'shared/error_messages', object: @comment %>
                 <div class="form-group">
                   <%= f.label :comment_text, t('task_comments.fields.comment_text'), class: 'form-label' %>
@@ -100,7 +100,7 @@
                       <span class="comment-author"><%= comment.user.display_name %></span>
                       <span class="comment-time"><%= comment.created_at.strftime('%b %d, %Y %H:%M') %></span>
                       <% if comment.user == current_user || current_user.admin? %>
-                        <%= link_to '✕', task_comment_path(comment), method: :delete, data: { confirm: 'Delete this comment?' }, class: 'btn btn-ghost btn-sm', style: 'color:var(--slate-400);padding:0.1rem 0.3rem;margin-left:auto;' %>
+                        <%= link_to '✕', project_task_task_comment_path(@project, @task, comment), method: :delete, data: { confirm: 'Delete this comment?' }, class: 'btn btn-ghost btn-sm', style: 'color:var(--slate-400);padding:0.1rem 0.3rem;margin-left:auto;' %>
                       <% end %>
                     </div>
                     <p class="comment-text"><%= comment.comment_text %></p>

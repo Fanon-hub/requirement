@@ -2,8 +2,7 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  # has_secure_password
-
+  
   has_many :managed_projects, class_name: 'Project', foreign_key: :project_manager_id, dependent: :nullify
   has_many :project_members,  dependent: :destroy
   has_many :projects,         through: :project_members
@@ -27,19 +26,17 @@ class User < ApplicationRecord
     super + %w[
       name
       email
-      display_name     # if you have this field
-      # Add any other fields you want searchable, e.g.:
-      # role
-      # created_at
-      # admin
+      name    
+      role
+      created_at
+      admin
     ]
   end
   
   def self.ransackable_associations(auth_object = nil)
     super + %w[
-      # e.g. if you search tasks or projects created by user:
-      # tasks
-      # projects
+      tasks
+      projects
     ]
   end
 
@@ -56,11 +53,35 @@ class User < ApplicationRecord
     find_or_create_by!(email: 'admin.guest@taskflow.com') do |u|
       u.name     = 'Admin Guest'
       u.password = SecureRandom.urlsafe_base64
-      u.role    = 'guest'
-      u.role    = 'admin'
+      u.role     = 'admin'
+      u.admin    = true
     end
   end
 
+  def member_of?(project)
+    projects.exists?(project.id)
+  end
+
+  def role_for(project)
+    project_members.find_by(project_id: project.id)&.role
+  end
+  # Permission Helpers
+  def can_view_project?(project)
+    admin? || member_of?(project)
+  end
+
+  def can_contribute_to?(project)
+    admin? || role_for(project).in?(%w[contributor manager])
+  end
+
+  def can_manage_project?(project)
+    admin? || role_for(project) == 'manager'
+  end
+
+  def can_delete_task?(task)
+    admin? || can_manage_project?(task.project) || task.creator_id == self
+  end
+  
   def admin?
     role == "admin"
   end

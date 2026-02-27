@@ -1,16 +1,39 @@
-<h2>Forgot your password?</h2>
+<% content_for :title, t('devise.passwords.new.title') %>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+<div class="page-content">
+  <div class="container-xs">
+    <div style="text-align:center; margin-bottom:2rem;">
+      <div style="font-size:2rem; margin-bottom:0.5rem;">⚡</div>
+      <h1 style="font-size:1.625rem;"><%= t('devise.passwords.new.title') %></h1>
+      <p class="text-muted"><%= t('devise.passwords.new.subtitle') || "Enter your email and we'll send you reset instructions." %></p>
+    </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <div class="form-card">
+      <%= render 'shared/error_messages', object: resource %>
+
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+        <div class="form-group">
+          <%= f.label :email, t('users.fields.email'), class: 'form-label' %>
+          <%= f.email_field :email, 
+                            class: "form-control #{resource.errors[:email].any? ? 'is-invalid' : ''}", 
+                            placeholder: t('users.fields.email_placeholder'), 
+                            required: true, 
+                            autofocus: true, 
+                            autocomplete: "email" %>
+        </div>
+
+        <div style="margin-top:1.5rem;">
+          <%= f.submit t('devise.passwords.new.submit') || "Send reset instructions", 
+                       class: 'btn btn-primary w-100 btn-lg' %>
+        </div>
+      <% end %>
+
+      <div style="text-align:center; margin-top:1.25rem; padding-top:1.25rem; border-top:1px solid var(--slate-200);">
+        <p class="text-sm text-muted">
+          <%= t('users.new.have_account') || "Already have an account?" %>
+          <%= link_to t('navigation.login'), new_session_path(resource_name), style: 'font-weight:600;' %>
+        </p>
+      </div>
+    </div>
   </div>
-
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

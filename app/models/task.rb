@@ -12,6 +12,8 @@ class Task < ApplicationRecord
   validates :status,      presence: true
   validates :priority,    presence: true
 
+  validate :assignee_is_project_member
+
   scope :by_due_date,   -> { order(due_date: :asc) }
   scope :high_priority, -> { where(priority: :high) }
   scope :incomplete,    -> { where.not(status: :done) }
@@ -22,7 +24,7 @@ class Task < ApplicationRecord
   scope :assigned_to,   ->(user) { where(assignee_id: user.id) }
 
   def self.ransackable_attributes(auth_object = nil)
-    %w[
+    super + %w[
       title
       description
       status
@@ -38,7 +40,7 @@ class Task < ApplicationRecord
 
   # Search ransack on associations
   def self.ransackable_associations(auth_object = nil)
-    %w[assignee creator project]
+    super + %w[assignee creator project]
   end
 
   def overdue?
@@ -66,5 +68,14 @@ class Task < ApplicationRecord
     when 'low'    then 'text-green-600'
     else 'text-gray-500'
     end
+  end
+
+  private
+
+  def assignee_is_project_member
+    return if assignee.nil?
+    return if project && project.users.exists?(assignee.id)
+
+    errors.add(:assignee, :not_a_project_member, message: 'must be a member of the project')
   end
 end

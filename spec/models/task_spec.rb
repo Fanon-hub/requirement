@@ -1,6 +1,39 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
+  before(:all) do
+    @manager = User.create!(name: 'Manager', email: 'mgr@example.com', password: 'password')
+    @project = Project.create!(name: 'Test Project', description: 'desc', status: :pending, project_manager: @manager, start_date: Date.today)
+  end
+
+  after(:all) do
+    Task.delete_all
+    ProjectMember.delete_all
+    Project.delete_all
+    User.delete_all
+  end
+
+  it 'is invalid when assignee is not a project member' do
+    non_member = User.create!(name: 'Non', email: 'non@example.com', password: 'password')
+
+    task = @project.tasks.build(title: 'Task 1', status: :pending, priority: :low, creator: @manager, assignee: non_member)
+
+    expect(task).not_to be_valid
+    expect(task.errors[:assignee]).to include('must be a member of the project')
+  end
+
+  it 'is valid when assignee is a project member' do
+    member = User.create!(name: 'Member', email: 'mem@example.com', password: 'password')
+    ProjectMember.create!(project: @project, user: member, role: 'contributor', joined_at: Date.today)
+
+    task = @project.tasks.build(title: 'Task 2', status: :pending, priority: :low, creator: @manager, assignee: member)
+
+    expect(task).to be_valid
+  end
+end
+require 'rails_helper'
+
+RSpec.describe Task, type: :model do
   let(:project) { create(:project) }
   let(:creator) { create(:user) }
 

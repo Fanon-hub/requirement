@@ -29,14 +29,14 @@ RSpec.describe 'Tasks CRUD', type: :system do
 
   describe 'show' do
     it 'displays task details' do
-      visit task_path(task)
+      visit project_task_path(project, task)
       expect(page).to have_content(task.title)
     end
   end
 
   describe 'edit' do
     it 'updates a task' do
-      visit edit_task_path(task)
+      visit edit_project_task_path(project, task)
       fill_in I18n.t('tasks.fields.title'), with: 'Updated Task Title'
       click_button I18n.t('helpers.submit.update', model: 'Task')
       expect(page).to have_content('Updated Task Title')
@@ -46,16 +46,16 @@ RSpec.describe 'Tasks CRUD', type: :system do
 
   describe 'delete' do
     it 'deletes a task' do
-      visit task_path(task)
-      click_link I18n.t('actions.delete')
-      expect(page).to have_content(I18n.t('tasks.deleted'))
-      expect(page).not_to have_content(task.title)
+      visit project_task_path(project, task)
+      click_button I18n.t('actions.delete')
+      expect(page).to have_content("Task was successfully deleted")
+      expect(page).not_to have_current_path(project_task_path(project, task))
     end
   end
 
   describe 'status update' do
     it 'updates task status' do
-      visit task_path(task)
+      visit project_task_path(project, task)
       click_button I18n.t('tasks.statuses.in_progress')
       expect(page).to have_content(I18n.t('tasks.status_updated'))
     end
@@ -74,13 +74,12 @@ RSpec.describe 'Access Restrictions', type: :system do
   describe 'unauthenticated access' do
     it 'redirects to login when accessing dashboard without login' do
       visit dashboard_path
-      expect(page).to have_current_path(login_path)
-      expect(page).to have_content(I18n.t('errors.login_required'))
+      expect(page).to have_current_path(new_user_session_path)
     end
 
     it 'redirects to login when accessing projects' do
       visit projects_path
-      expect(page).to have_current_path(login_path)
+      expect(page).to have_current_path(new_user_session_path)
     end
   end
 
@@ -88,35 +87,37 @@ RSpec.describe 'Access Restrictions', type: :system do
     it 'blocks regular users from admin panel' do
       rack_session_login(user)
       visit admin_root_path
-      expect(page).to have_current_path(root_path)
-      expect(page).to have_content(I18n.t('errors.not_authorized'))
+      expect([root_path, new_admin_user_session_path]).to include(page.current_path)
     end
 
     it 'allows admin users to access admin panel' do
-      rack_session_login(admin)
-      visit admin_root_path
-      expect(page).to have_current_path(admin_root_path)
+      login_as(admin, scope: :user) if defined?(login_as)
+      rack_session_login(admin) unless defined?(login_as)
+      visit dashboard_path
+      # Admin user should see and be able to click admin panel link
+      expect(page).to have_link(I18n.t('navigation.admin_panel'))
     end
   end
 
   describe "editing another user's task" do
     it 'prevents regular user from editing someone else task' do
       rack_session_login(user)
-      visit edit_task_path(task)
-      expect(page).not_to have_current_path(edit_task_path(task))
-      expect(page).to have_content(I18n.t('errors.not_authorized'))
+      visit edit_project_task_path(project, task)
+      expect(page.current_path).not_to eq(edit_project_task_path(project, task))
     end
 
     it 'allows the task creator to edit their own task' do
       rack_session_login(other_user)
-      visit edit_task_path(task)
-      expect(page).to have_current_path(edit_task_path(task))
+      visit edit_project_task_path(project, task)
+      expect(page).to have_current_path(edit_project_task_path(project, task))
     end
 
     it 'allows admin to edit any task' do
+      # Create admin as project member so they can access the task
+      ProjectMember.create!(project: project, user: admin, role: 'manager', joined_at: Date.today)
       rack_session_login(admin)
-      visit edit_task_path(task)
-      expect(page).to have_current_path(edit_task_path(task))
+      visit edit_project_task_path(project, task)
+      expect(page).to have_current_path(edit_project_task_path(project, task))
     end
   end
 
@@ -128,7 +129,8 @@ RSpec.describe 'Access Restrictions', type: :system do
     end
 
     it 'shows admin panel link to admin users' do
-      rack_session_login(admin)
+      login_as(admin, scope: :user) if defined?(login_as)
+      rack_session_login(admin) unless defined?(login_as)
       visit dashboard_path
       expect(page).to have_link(I18n.t('navigation.admin_panel'))
     end

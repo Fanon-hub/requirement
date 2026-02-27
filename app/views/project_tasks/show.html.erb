@@ -1,0 +1,206 @@
+<% content_for :title, @task.title %>
+
+<div class="page-header">
+  <div class="container">
+    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+      <div>
+        <div class="text-sm text-muted mb-1">
+          <%= link_to t('navigation.projects'), projects_path %> /
+          <%= link_to @task.project.name, project_path(@task.project) %> /
+        </div>
+        <h1 class="page-title"><%= @task.title %></h1>
+        <div class="flex items-center gap-2 mt-2 flex-wrap">
+          <span class="badge badge-<%= @task.status %>"><%= t("tasks.statuses.#{@task.status}", default: @task.status.to_s.titleize) %></span>
+          <span class="badge badge-<%= @task.priority %>"><%= t("tasks.priorities.#{@task.priority}", default: @task.priority.to_s.titleize) %></span>
+          <% if @task.overdue? %>
+            <span class="text-red-600 font-semibold text-sm">⚠️ Overdue</span>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="page-actions flex flex-wrap gap-3">
+        <% project = @task.project %>
+        <% if current_user.can_contribute_to?(project) %>
+          <%= link_to t('tasks.new.title'), new_project_task_path(project), class: "btn btn-success" %>
+          <%= link_to t('actions.edit'), edit_project_task_path(project, @task), class: "btn btn-warning" %>
+        <% end %>
+
+        <% if current_user.can_delete_task?(@task) %>
+          <%= button_to t('actions.delete'),
+                        project_task_path(project, @task),
+                        method: :delete,
+                        data: { confirm: t('actions.confirm_delete') },
+                        class: 'btn btn-danger' %>
+        <% end %>
+
+        <%= link_to t('actions.back'), project_path(project), class: 'btn btn-ghost' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-content">
+  <div class="container">
+    <div class="detail-layout grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <!-- Main Column: Description + Comments + Status Update -->
+      <div class="lg:col-span-2">
+
+        <!-- Quick Status Update (only for contributors) -->
+        <% if current_user.can_contribute_to?(@task.project) %>
+          <div class="card mb-6">
+            <div class="card-header">
+              <h4><%= t('tasks.show.update_status') %></h4>
+            </div>
+            <div class="card-body">
+              <div class="flex flex-wrap gap-2">
+                <% Task.statuses.keys.each do |s| %>
+                  <%= button_to t("tasks.statuses.#{s}", default: s.to_s.titleize),
+                                update_status_project_task_path(@task.project, @task, status: s),
+                                method: :patch,
+                                class: "btn btn-sm #{@task.status.to_s == s ? 'btn-primary' : 'btn-outline-secondary'}" %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Description -->
+        <% if @task.description.present? %>
+          <div class="card mb-6">
+            <div class="card-header"><h4><%= t('tasks.fields.description') %></h4></div>
+            <div class="card-body">
+              <p class="whitespace-pre-wrap leading-relaxed text-gray-700"><%= simple_format @task.description %></p>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Comments Section -->
+        <div class="card">
+          <div class="card-header">
+            <h4><%= t('tasks.show.comments_section') %> (<%= @comments.count %>)</h4>
+          </div>
+          <div class="card-body">
+
+            <!-- Add Comment Form (visible to contributors or anyone allowed to comment) -->
+            <% if current_user.can_contribute_to?(@task.project) %>
+              <div class="mb-6 pb-6 border-b border-gray-200">
+                <h5 class="text-sm font-medium mb-3"><%= t('tasks.show.add_comment') %></h5>
+                <%= form_with model: [@task, @comment || @task.task_comments.build], url: task_task_comments_path(@task), local: true do |f| %>
+                  <%= render 'shared/error_messages', object: f.object %>
+                  <div class="mb-3">
+                    <%= f.label :comment_text, t('task_comments.fields.comment_text'), class: 'form-label' %>
+                    <%= f.text_area :comment_text, class: 'form-control', placeholder: t('task_comments.fields.comment_text_placeholder'), rows: 3 %>
+                  </div>
+                  <%= f.submit t('tasks.show.post_comment'), class: 'btn btn-primary btn-sm' %>
+                <% end %>
+              </div>
+            <% end %>
+
+            <!-- Comment List -->
+            <% if @comments.empty? %>
+              <p class="text-muted text-center py-4"><%= t('tasks.show.no_comments') %></p>
+            <% else %>
+              <% @comments.each do |comment| %>
+                <div class="flex gap-3 mb-4">
+                  <div class="user-avatar user-avatar-sm flex-shrink-0"><%= comment.user.initials %></div>
+                  <div class="flex-1">
+                    <div class="flex items-center justify-between mb-1">
+                      <span class="font-medium"><%= comment.user.display_name %></span>
+                      <span class="text-xs text-muted"><%= comment.created_at.strftime('%b %d, %Y %H:%M') %></span>
+                      <% if comment.user == current_user || current_user.admin? %>
+                        <%= link_to '✕', task_comment_path(comment), 
+                                    method: :delete, 
+                                    data: { confirm: t('actions.confirm_delete') }, 
+                                    class: 'text-gray-400 hover:text-red-600 text-sm ml-auto' %>
+                      <% end %>
+                    </div>
+                    <p class="text-gray-800"><%= simple_format comment.comment_text %></p>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar: Task Details -->
+      <div class="lg:col-span-1">
+        <div class="sidebar-card">
+          <div class="sidebar-card-title"><%= t('tasks.show.task_details') %></div>
+
+          <div class="space-y-4">
+            <div class="sidebar-item">
+              <div class="sidebar-item-label"><%= t('tasks.fields.status') %></div>
+              <div class="sidebar-item-value">
+                <span class="badge badge-<%= @task.status %>"><%= t("tasks.statuses.#{@task.status}", default: @task.status.to_s.titleize) %></span>
+              </div>
+            </div>
+
+            <div class="sidebar-item">
+              <div class="sidebar-item-label"><%= t('tasks.fields.priority') %></div>
+              <div class="sidebar-item-value">
+                <span class="badge badge-<%= @task.priority %>"><%= t("tasks.priorities.#{@task.priority}", default: @task.priority.to_s.titleize) %></span>
+              </div>
+            </div>
+
+            <div class="sidebar-item">
+              <div class="sidebar-item-label"><%= t('tasks.fields.project') %></div>
+              <div class="sidebar-item-value"><%= link_to @task.project.name, project_path(@task.project) %></div>
+            </div>
+
+            <div class="sidebar-item">
+              <div class="sidebar-item-label"><%= t('tasks.fields.assignee') %></div>
+              <div class="sidebar-item-value">
+                <% if @task.assignee %>
+                  <div class="flex items-center gap-2">
+                    <div class="user-avatar user-avatar-sm"><%= @task.assignee.initials %></div>
+                    <%= @task.assignee.display_name %>
+                  </div>
+                <% else %>
+                  <span class="text-muted"><%= t('tasks.show.unassigned') %></span>
+                <% end %>
+              </div>
+            </div>
+
+            <div class="sidebar-item">
+              <div class="sidebar-item-label"><%= t('tasks.fields.creator') %></div>
+              <div class="sidebar-item-value"><%= @task.creator&.display_name || t('unknown') %></div>
+            </div>
+
+            <% if @task.due_date %>
+              <div class="sidebar-item">
+                <div class="sidebar-item-label"><%= t('tasks.fields.due_date') %></div>
+                <div class="sidebar-item-value <%= 'text-red-600' if @task.overdue? %>">
+                  📅 <%= @task.due_date.strftime('%B %d, %Y') %>
+                  <% if (days = @task.days_until_due) %>
+                    <div class="text-xs text-muted mt-1">
+                      <% if days < 0 %>
+                        <%= days.abs %> <%= t('days_overdue') %>
+                      <% elsif days == 0 %>
+                        <%= t('due_today') %>
+                      <% else %>
+                        <%= days %> <%= t('days_left') %>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+
+            <div class="sidebar-item">
+              <div class="sidebar-item-label"><%= t('tasks.fields.created_at') %></div>
+              <div class="sidebar-item-value text-sm"><%= @task.created_at.strftime('%b %d, %Y') %></div>
+            </div>
+
+            <div class="sidebar-item">
+              <div class="sidebar-item-label"><%= t('tasks.fields.updated_at') %></div>
+              <div class="sidebar-item-value text-sm"><%= @task.updated_at.strftime('%b %d, %Y') %></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

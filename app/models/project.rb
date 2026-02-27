@@ -3,7 +3,7 @@ class Project < ApplicationRecord
 
   belongs_to :project_manager, class_name: 'User', foreign_key: "project_manager_id"  
   has_many   :project_members, dependent: :destroy
-  has_many  :users, through: :project_members
+  has_many   :users, through: :project_members
   has_many   :members, through: :project_members, source: :user
   has_many   :tasks, dependent: :destroy
   # has_one   :project_manager, class_name: 'User', foreign_key: 'project_manager_id'
@@ -14,7 +14,9 @@ class Project < ApplicationRecord
   validates :project_manager_id, presence: true
   validate  :end_date_after_start_date
 
-  scope :active,      -> { where(status: [:pending, :in_progress, :completed]) }
+  after_create :add_manager_as_member
+
+  scope :active,      -> { where(status: :in_progress) }
   scope :by_status,   ->(s) { where(status: s) }
   scope :recent,      -> { order(created_at: :desc) }
   scope :by_name,     -> { order(:name) }
@@ -38,8 +40,11 @@ class Project < ApplicationRecord
   end
 
   def task_completion_rate
-    return 0 if tasks.count.zero?
-    (tasks.done.count.to_f / tasks.count * 100).round
+    total = tasks.count
+    return 0 if total.zero?
+
+    completed = tasks.done.count
+    (completed.to_f / total * 100).round
   end
 
   def overdue?
@@ -47,6 +52,13 @@ class Project < ApplicationRecord
   end
 
   private
+  
+  def add_manager_as_member
+    project_members.create!(
+      user: project_manager,
+      role: :manager
+    )
+  end
 
   def end_date_after_start_date
     return unless start_date.present? && end_date.present?

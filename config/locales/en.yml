@@ -1,5 +1,6 @@
 en:
   app_name: "TaskFlow"
+  Taskflow: "TaskFlow"
   tagline: "Team Task Management, Simplified"
   app_description: "Centralize your team's tasks, track progress in real-time, and collaborate efficiently."
 
@@ -68,11 +69,11 @@ en:
       title: "Edit Project"
     members:
       title: "Project Members"
-    created: "Project was successfully created."
-    updated: "Project was successfully updated."
-    deleted: "Project was successfully deleted."
-    member_added: "Team member added successfully."
-    member_removed: "Team member removed."
+    created_successfully: "Project was successfully created."
+    updated_successfully: "Project was successfully updated."
+    deleted_successfully: "Project was successfully deleted."
+    member_added_successfully: "Team member added successfully."
+    member_removed_successfully: "Team member removed."
     fields:
       name: "Project Name"
       description: "Description"
@@ -245,6 +246,13 @@ en:
             comment_text:
               blank: "Comment cannot be blank"
               too_long: "Comment is too long (maximum 1000 characters)"
+  
+  devise:
+    passwords:
+      new:
+        title: "Forgot your password?"
+        subtitle: "Enter your email address and we'll send you instructions to reset your password."
+        submit: "Send me reset password instructions" 
 
   date:
     formats:

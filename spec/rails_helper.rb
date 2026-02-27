@@ -27,6 +27,11 @@ RSpec.configure do |config|
 
   # Helpers for system specs
   config.include SessionHelper, type: :system
+  # Warden helpers for fast login in system/request specs
+  if defined?(Warden)
+    config.include Warden::Test::Helpers
+    config.after(:each) { Warden.test_reset! }
+  end
 end
 
 Shoulda::Matchers.configure do |config|
