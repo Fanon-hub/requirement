@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :task_comment do
-    content { "MyText" }
-    task { nil }
-    user { nil }
+    comment_text { "MyText" }
+    task { association :task }
+    user { association :user }
   end
 end

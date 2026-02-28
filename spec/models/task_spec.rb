@@ -1,15 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-  before(:all) do
-    @manager = User.create!(name: 'Manager', email: 'mgr@example.com', password: 'password')
+  before(:each) do
+    @manager = User.create!(name: 'Manager', email: "mgr+#{SecureRandom.hex(4)}@example.com", password: 'password')
     @project = Project.create!(name: 'Test Project', description: 'desc', status: :pending, project_manager: @manager, start_date: Date.today)
   end
 
-  after(:all) do
+  after(:each) do
+    TaskComment.delete_all
     Task.delete_all
     ProjectMember.delete_all
     Project.delete_all
+    Notification.delete_all
     User.delete_all
   end
 

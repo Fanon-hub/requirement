@@ -65,6 +65,22 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  # Default URL options for mailer (used by Devise links). Set HOSTNAME in env.
+  config.action_mailer.default_url_options = { host: ENV.fetch('HOSTNAME', 'example.com') }
+  # Configure SMTP via ENV for providers like Gmail (use App Passwords)
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              ENV.fetch('GMAIL_SMTP_ADDRESS', 'smtp.gmail.com'),
+    port:                 ENV.fetch('GMAIL_SMTP_PORT', 587),
+    domain:               ENV.fetch('GMAIL_SMTP_DOMAIN', ENV.fetch('HOSTNAME', 'example.com')),
+    user_name:            ENV['GMAIL_SMTP_USERNAME'], # your Gmail address
+    password:             ENV['GMAIL_SMTP_PASSWORD'], # app password
+    authentication:       :plain,
+    enable_starttls_auto: true
+  }
+
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false

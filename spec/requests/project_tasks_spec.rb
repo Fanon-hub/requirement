@@ -3,19 +3,21 @@ require 'rails_helper'
 RSpec.describe 'Project Tasks access', type: :request do
   include Devise::Test::IntegrationHelpers
 
-  before(:all) do
-    @manager = User.create!(name: 'Manager', email: 'pm@example.com', password: 'password')
+  before(:each) do
+    @manager = User.create!(name: 'Manager', email: "pm+#{SecureRandom.hex(4)}@example.com", password: 'password')
     @project = Project.create!(name: 'Acme', description: 'x', status: :pending, project_manager: @manager, start_date: Date.today)
-    @viewer = User.create!(name: 'Viewer', email: 'viewer@example.com', password: 'password')
+    @viewer = User.create!(name: 'Viewer', email: "viewer+#{SecureRandom.hex(4)}@example.com", password: 'password')
     ProjectMember.create!(project: @project, user: @viewer, role: 'viewer', joined_at: Date.today)
-    @contributor = User.create!(name: 'Contributor', email: 'contrib@example.com', password: 'password')
+    @contributor = User.create!(name: 'Contributor', email: "contrib+#{SecureRandom.hex(4)}@example.com", password: 'password')
     ProjectMember.create!(project: @project, user: @contributor, role: 'contributor', joined_at: Date.today)
   end
 
-  after(:all) do
+  after(:each) do
+    TaskComment.delete_all
     Task.delete_all
     ProjectMember.delete_all
     Project.delete_all
+    Notification.delete_all
     User.delete_all
   end
 

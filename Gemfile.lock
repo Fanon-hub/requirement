@@ -161,6 +161,10 @@ GEM
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
     kgio (2.11.4)
+    launchy (2.5.2)
+      addressable (~> 2.8)
+    letter_opener (1.10.0)
+      launchy (>= 2.2, < 4)
     listen (3.10.0)
       logger
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -378,6 +382,7 @@ DEPENDENCIES
   importmap-rails (~> 2.2)
   jbuilder (~> 2.7)
   kaminari
+  letter_opener
   listen (~> 3.3)
   pg (~> 1.5)
   puma (~> 7.0)

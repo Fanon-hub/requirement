@@ -3,15 +3,19 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  # In the development environment your application's code is reloaded any time
-  # it changes. This slows down response time but is perfect for development
-  # since you don't have to restart the web server when you make code changes.
+  # Letter_opener
+  config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.perform_deliveries = true
+
   config.cache_classes = false
+
+  # helps links in reset emails point to localhost
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
   # Do not eager load code on boot.
   config.eager_load = false
 
-  # Show full error reports.
+  # Show full error reports. 
   config.consider_all_requests_local = true
   config.action_dispatch.show_exceptions = :rescuable 
 
@@ -34,10 +38,26 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
-  # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
-
+  # Configure Action Mailer for development (used by Devise for reset emails).
+  # Set these values in your environment when testing email delivery (Gmail/SendGrid).
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.perform_deliveries = true
   config.action_mailer.perform_caching = false
+
+  # Default URL options used by Devise mailer links
+  # config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  # # SMTP example - use ENV variables for credentials in development
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {
+  #   address: ENV.fetch('SMTP_ADDRESS', 'smtp.gmail.com'),
+  #   port: ENV.fetch('SMTP_PORT', 587),
+  #   domain: ENV.fetch('SMTP_DOMAIN', 'localhost.localdomain'),
+  #   user_name: ENV['SMTP_USERNAME'],
+  #   password: ENV['SMTP_PASSWORD'],
+  #   authentication: :plain,
+  #   enable_starttls_auto: true
+  # }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

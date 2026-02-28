@@ -51,6 +51,7 @@ RSpec.describe User, type: :model do
 
   describe '.guest_user' do
     it 'creates a guest user if none exists' do
+      User.where(email: 'guest@taskflow.com').delete_all
       expect { User.guest_user }.to change { User.count }.by(1)
     end
 

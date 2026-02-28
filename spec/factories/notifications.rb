@@ -1,7 +1,8 @@
 FactoryBot.define do
   factory :notification do
-    user { nil }
-    notifiable { nil }
-    read { false }
+    user { association :user }
+    notification_type { 'info' }
+    message { 'Test notification' }
+    is_read { false }
   end
 end
